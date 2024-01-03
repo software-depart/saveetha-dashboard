@@ -17,24 +17,11 @@ export class AuthService {
     public jwtHelper: JwtHelperService
   ) { }
 
-  login(input: any) {
-    let url: any = environment.user + '/login' 
-    return this.httpClient.post(url,input).pipe(
-      map((response:any) => {
-        this.saveData(response)
-        return response
-      })
-    )
-  }
-
-  logout() {
-    localStorage.clear();
-  }
 
   refreshToken() {
     let url: any = environment.user + '/refresh'
-    let refreshToken = localStorage.getItem('refresh_token') 
-    return this.httpClient.post(url,{refreshToken: refreshToken}).pipe(
+    let refreshToken = localStorage.getItem('refresh_token')
+    return this.httpClient.post(url, { refreshToken: refreshToken }).pipe(
       map((response: any) => {
         this.saveData(response)
         return response.data.token.access_token
@@ -43,16 +30,16 @@ export class AuthService {
   }
 
   saveData(input: any) {
-    localStorage.setItem('access_token',input.data.token.accessToken);
-    localStorage.setItem('refresh_token',input.data.token.refreshToken)
-    if(input.data.userProfile) {
-      localStorage.setItem('userProfile',JSON.stringify(input.data.userProfile));
+    localStorage.setItem('access_token', input.data.token.accessToken);
+    localStorage.setItem('refresh_token', input.data.token.refreshToken)
+    if (input.data.userProfile) {
+      localStorage.setItem('userProfile', JSON.stringify(input.data.userProfile));
     }
   }
 
   isAuthUser() {
-    let userProfile:any = localStorage.getItem('userProfile');
+    let userProfile: any = localStorage.getItem('userProfile');
     userProfile = JSON.parse(userProfile)
-    return userProfile._id ?  true : false;
+    return userProfile._id ? true : false;
   }
 }
