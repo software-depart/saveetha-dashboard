@@ -1,0 +1,100 @@
+<div class="modal fade" id="user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{ name == 'delete'? 'Delete': 'Edit' }}</h5>
+                <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form #form="ngForm" *ngIf="name!='delete'" (ngSubmit)="onSubmit(form)">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="userName" name="userName" autocomplete="off" [(ngModel)]="model.userName" placeholder="userName">
+                        <label for="userName">User ID</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                            <label for="firstName">First Name</label>
+                        </div>
+    
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                            <label for="firstName">Last Name</label>
+                        </div>
+
+                    </div>
+                    
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                        <label for="firstName">Mobile No.</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                        <label for="firstName">Alternate Mobile No.</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">Address</label>
+                      </div>
+
+                      <div class="mb-3">
+                        <label>Location</label>
+                        <select class="form-select w-100 my-2">
+                            
+                            <option selected>Select College</option>
+                            <option value="1">City Campus</option>
+                            <option value="2">Thndalam Campus</option>
+                          </select>
+
+                    </div>
+                      
+
+                    <div class="mb-3">
+                        <label>College</label>
+                        <select class="form-select w-100 my-2">
+                            
+                            <option selected>Select College</option>
+                            <option value="1">Dental</option>
+                            <option value="2">Law</option>
+                            <option value="3">Medical</option>
+                            <option value="3">Management</option>
+                            <option value="3">Engineering</option>
+                          </select>
+
+                    </div>
+  
+                      
+                    
+                    <!-- <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="lastName" name="lastName"  autocomplete="off" [(ngModel)]="model.lastName" placeholder="lastName">
+                        <label for="lastName">Approved</label>
+                    </div> -->
+                    <!-- <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="emailId" name="emailId" autocomplete="off" [(ngModel)]="model.emailId" placeholder="emailId">
+                        <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="...">
+                        <label for="emailId">Active</label>
+                    </div>
+                    
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="password" name="password" autocomplete="off" [(ngModel)]="model.password" placeholder="password">
+                        <label for="password">Password</label>
+                    </div> -->
+                    </form>
+                    <div *ngIf="name == 'delete'">
+                        <p>Are you sure you want to be delete?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ name =='delete' ? 'Cancel': 'Close' }}</button>
+                    <button type="submit" class="btn btn-primary">{{ name == 'delete'? 'Ok': 'Save' }}</button>
+                </div>
+            
+        </div>
+    </div>
+  </div>
+  

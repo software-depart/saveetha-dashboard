@@ -1,0 +1,95 @@
+<div class="container-fluid pt-4 px-4">
+    <form class="bg-light text-center rounded p-4 row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="col-6">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="mb-0">User Profile</h6>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="userName" name="userName" autocomplete="off" [(ngModel)]="model.userName" placeholder="userName">
+                <label for="userName">User Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                <label for="firstName">First Name</label>
+            </div> 
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="lastName" name="lastName" autocomplete="off" [(ngModel)]="model.lastName" placeholder="lastName">
+                <label for="lastName">Last Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="email" name="email" autocomplete="off" [(ngModel)]="model.emailId" placeholder="email">
+                <label for="email">Email Id</label>
+            </div>  
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="mobileNo" name="mobileNo" autocomplete="off" [(ngModel)]="model.mobileNo" placeholder="mobileNo">
+                <label for="mobileNo">Mobile No</label>
+            </div> 
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="dob" name="dob" autocomplete="off" [(ngModel)]="model.dob" placeholder="dob">
+                <label for="mobileNo">Date of Birth</label>
+            </div>  
+            <fieldset class="row mb-3">
+                <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                <div class="col-2 d-flex justify-content-between">
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="radio" name="sex"
+                            id="male" [(ngModel)]="model.gender" value="male"  checked>
+                        <label class="form-check-label" for="male">
+                           Male
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sex"
+                            id="female" [(ngModel)]="model.gender" value="female">
+                        <label class="form-check-label" for="female">
+                           Female
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-6">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h6 class="mb-0">Address</h6>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="line1" name="line1" autocomplete="off" [(ngModel)]="model.address.line1" placeholder="line1">
+                <label for="line1">Line 1</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="line2" name="line2" autocomplete="off" [(ngModel)]="model.address.line2" placeholder="line2">
+                <label for="line2">Line 2</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="city" [(ngModel)]="model.address.city">
+                    <option value="" selected>Select a option</option>
+                    <option value="chennai">Chennai</option>
+                </select>
+                <label for="floatingSelect">City</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="state" [(ngModel)]="model.address.state">
+                    <option value="" selected>Select a option</option>
+                    <option value="tamilnadu">TamilNadu</option>
+                </select>
+                <label for="floatingSelect">State</label>
+            </div>
+            <div class="form-floating mb-3">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="country" [(ngModel)]="model.address.country">
+                    <option value="" selected>Select a option</option>
+                    <option value="country">India</option>
+                </select>
+                <label for="floatingSelect">Country</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="pincode" name="pincode" autocomplete="off" [(ngModel)]="model.address.pincode" placeholder="pincode">
+                <label for="pincode">Pincode</label>
+            </div>
+        </div>
+        <div align="end"> 
+            <button type="submit"  class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+
+

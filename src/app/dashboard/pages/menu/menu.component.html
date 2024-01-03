@@ -1,0 +1,93 @@
+<div class="d-flex mt-2 px-4">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+      aria-expanded="false" aria-controls="collapseExample">
+      <i class="fa fa-filter" aria-hidden="true"></i>
+  Filter
+    </button>
+  </div>
+  
+  <div class="container-fluid collapse p-2 px-4" id="collapseExample">
+    <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
+      <div>
+        <mat-form-field  class="white-backgrounded-field">
+          <mat-label>Choose Location</mat-label>
+          <mat-select>
+              <mat-option>City Campus</mat-option>
+              <mat-option>Thandalam Campus</mat-option>
+              <mat-option>All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div>
+        <mat-form-field>
+          <mat-label>Food Court</mat-label>
+          <mat-select>
+              <mat-option>One</mat-option>
+              <mat-option>Two</mat-option>
+              <mat-option>Three</mat-option>
+              <mat-option>All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div>
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Restaurant</mat-label>
+          <mat-select>
+            <mat-option>One</mat-option>
+            <mat-option>Two</mat-option>
+            <mat-option>Three</mat-option>
+            <mat-option>All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+    </div>
+  </div>
+  
+  <div class="container-fluid pt-2 px-4">
+      <div class="bg-light text-center rounded p-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+              <h5 class="mb-0 text-primary">Items</h5>
+              
+          </div>
+           <!-- user model -->
+          
+          <div class="table-responsive">
+              <table class="table text-start  align-middle table-bordered table-hover mb-0">
+                  <thead>
+                      <tr class="text-dark">
+                          <th scope="col">Name</th>
+                          <th scope="col">Image</th>
+                          <th scope="col">Qty.</th>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Amount</th>
+                          <th scope="col">Restaurent</th>
+                          <th scope="col">Sub Category</th>
+                          <th scope="col">Created by</th>
+                          <th scope="col">Updated by</th>
+                          <th scope="col">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Fish Briyani</td>
+                          <td><img src="../../../../assets/img/Chicken-Biryani.png" style="width: 50px; height: 50px;"></td>
+                          <td>500</td>
+                          <td>kg</td>
+                          <td>{{ '260'  | currency: 'INR'}}</td>
+                          <td>SS Briyani</td>
+                          <td>Sea Food</td>
+                          <td>Restaurent</td>
+                          <td>Admin</td>
+                          <td><button type="button" class="btn btn-success">Approved</button></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  
+  
+  

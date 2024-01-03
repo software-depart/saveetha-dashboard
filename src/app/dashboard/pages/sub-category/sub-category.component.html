@@ -1,0 +1,96 @@
+<div class="d-flex mt-2 px-4">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+Filter
+  </button>
+</div>
+
+<div class="container-fluid collapse p-2 px-4" id="collapseExample">
+  <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
+    <div>
+      <mat-form-field  class="white-backgrounded-field">
+        <mat-label>Choose Location</mat-label>
+        <mat-select>
+            <mat-option>City Campus</mat-option>
+            <mat-option>Thandalam Campus</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Food Court</mat-label>
+        <mat-select>
+            <mat-option>One</mat-option>
+            <mat-option>Two</mat-option>
+            <mat-option>Three</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="white-backgrounded-field">
+        <mat-label>Restaurant</mat-label>
+        <mat-select>
+          <mat-option>One</mat-option>
+          <mat-option>Two</mat-option>
+          <mat-option>Three</mat-option>
+          <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+</div>
+
+  <div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="mb-0 text-primary">Sub Category</h5>
+            <button type="button"  class="btn btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#user">Add</button>
+        </div>
+         <!-- user model -->
+        
+        <div class="table-responsive">
+            <table class="table text-start  align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Created on</th>
+                        <th scope="col">Approved</th>
+                        <th scope="col">Active</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sea Food Briyani</td>
+                        <td><img src="../../../../assets/img/Chicken-Biryani.png" style="width: 50px; height: 50px;"></td>
+                        <td>Briyani</td>
+                        <td>Admin</td>
+                        <td>06-03-2020</td>
+                        <td><input type="checkbox" checked data-toggle="toggle" disabled></td>
+                        <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm" style="background-color: rgb(37, 181, 54);">Active</button></td>
+                        <td>
+                            <div class='d-flex justify-content-around'>
+                                <div (click)="delete('edit')" data-bs-toggle="modal" data-bs-target="#user" ><i class="fa fa-edit"></i></div>
+                                <div (click)="delete('delete')" data-bs-toggle="modal" data-bs-target="#user" ><i class="fa fa-trash text-danger"></i></div>
+                                
+                            </div>
+                             <!-- user model -->
+                            <app-sub-category-form [name]="names"></app-sub-category-form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

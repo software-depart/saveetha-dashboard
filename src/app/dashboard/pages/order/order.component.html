@@ -1,0 +1,85 @@
+<div class="d-flex mt-2 px-4">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+Filter
+  </button>
+</div>
+
+<div class="container-fluid collapse p-2 px-4" id="collapseExample">
+  <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
+    <div>
+      <mat-form-field  class="white-backgrounded-field">
+        <mat-label>Choose Location</mat-label>
+        <mat-select>
+            <mat-option>City Campus</mat-option>
+            <mat-option>Thandalam Campus</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Food Court</mat-label>
+        <mat-select>
+            <mat-option>One</mat-option>
+            <mat-option>Two</mat-option>
+            <mat-option>Three</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="white-backgrounded-field">
+        <mat-label>Restaurant</mat-label>
+        <mat-select>
+          <mat-option>One</mat-option>
+          <mat-option>Two</mat-option>
+          <mat-option>Three</mat-option>
+          <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="mb-0 text-primary">Order</h5>
+            
+        </div>
+         <!-- user model -->
+        
+        <div class="table-responsive">
+            <table class="table text-start  align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col">User ID</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Created at</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10250</td>
+                        <td>Egg Briyani, Fish fry</td>
+                        <td>{{ '260'  | currency: 'INR'}}</td>
+                        <td>Delivery</td>
+                        <td>16-11-2023</td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,53 @@
+<div class="modal fade" [id]="model?._id ? 'user' + model._id : 'user-model'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{ model?._id ? 'Edit User' : 'Add User' }}</h5>
+                <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="userName" name="userName" autocomplete="off" [(ngModel)]="model.userName" placeholder="userName">
+                        <label for="userName">User Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
+                        <label for="firstName">First name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="lastName" name="lastName"  autocomplete="off" [(ngModel)]="model.lastName" placeholder="lastName">
+                        <label for="lastName">Last name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="emailId" name="emailId" autocomplete="off" [(ngModel)]="model.emailId" placeholder="emailId">
+                        <label for="emailId">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="mobileNo" name="mobileNo" autocomplete="off" [(ngModel)]="model.mobileNo" placeholder="mobileNo">
+                        <label for="mobileNo">Mobile No</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="type" [(ngModel)]="model.type">
+                            <option value="" selected>Select a option</option>
+                            <option value="Astrologer">Astrologer</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Technician">Technician</option>
+                            <option value="Admin">Admin</option>
+                            <option value="User">User</option>
+                        </select>
+                        <label for="floatingSelect">Type</label>
+                    </div>
+                    <div class="form-floating mb-3" *ngIf="model.type == 'User' && !model?._id">
+                        <input type="text" class="form-control" id="password" name="password" autocomplete="off" [(ngModel)]="model.password" placeholder="password">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">{{ model?._id ? 'Update' : 'Save' }}</button>
+                </div>
+             </form>
+        </div>
+    </div>
+</div>
