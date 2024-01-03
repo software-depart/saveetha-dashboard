@@ -1,0 +1,111 @@
+<div class="d-flex mt-2 px-4">
+  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+    aria-expanded="false" aria-controls="collapseExample">
+    <i class="fa fa-filter" aria-hidden="true"></i>
+Filter
+  </button>
+</div>
+
+<div class="container-fluid collapse p-2 px-4" id="collapseExample">
+  <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
+    <div>
+      <mat-form-field  class="white-backgrounded-field">
+        <mat-label>Choose Location</mat-label>
+        <mat-select>
+            <mat-option>City Campus</mat-option>
+            <mat-option>Thandalam Campus</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- <div>
+      <mat-form-field>
+        <mat-label>Food Court</mat-label>
+        <mat-select>
+            <mat-option>One</mat-option>
+            <mat-option>Two</mat-option>
+            <mat-option>Three</mat-option>
+            <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+
+    <!-- <div>
+      <mat-form-field class="white-backgrounded-field">
+        <mat-label>Restaurant</mat-label>
+        <mat-select>
+          <mat-option>One</mat-option>
+          <mat-option>Two</mat-option>
+          <mat-option>Three</mat-option>
+          <mat-option>All</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+
+  </div>
+</div>
+  
+  <div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="mb-0 text-primary">Food Courts</h5>
+        
+        <button type="button" class="btn btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#user">Add</button>
+      </div>
+      <!-- user model -->
+  
+      <div class="table-responsive">
+        <table class="table text-start  align-middle table-bordered table-hover mb-0">
+          <thead>
+            <tr class="text-dark">
+              <th scope="col">S.No</th>
+              <th scope="col">Food Court Name</th>
+              <th scope="col">Restaurant Count</th>
+              <th scope="col">Created by</th>
+              <th scope="col">Created on</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>1.</td>
+              <td>Law College</td>
+              <td>6</td>
+              <td>Admin</td>
+              <td>06-03-2020</td>
+              <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm" style="background-color: rgb(37, 181, 54);">Active</button></td>
+              <td>
+                <div class='d-flex justify-content-around'>
+                  <div data-bs-toggle="modal" data-bs-target="#user" ><i class="fa fa-edit"></i></div>
+                  <div><i class="fa fa-trash text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"></i></div>
+                </div>
+                <!-- user model -->
+                <app-food-form></app-food-form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Alert!</h5>
+                <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" (click)="delete()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

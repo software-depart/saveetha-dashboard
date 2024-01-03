@@ -1,0 +1,17 @@
+<div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <canvas
+  baseChart
+  class="chart"
+  [data]="barChartData"
+  [options]="barChartOptions"
+  [plugins]="barChartPlugins"
+  [type]="barChartType"
+  (chartHover)="chartHovered($event)"
+  (chartClick)="chartClicked($event)"
+    height="120px"
+>
+</canvas>
+
+    </div>
+</div>
