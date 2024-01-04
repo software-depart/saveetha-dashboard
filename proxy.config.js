@@ -1,6 +1,6 @@
 const PROXY_CONFIG = [{
-    context: ['/auth'],
-    target: 'https://ecommerce-9hcx.onrender.com',
+    context: ['/auth', '/restaurant'],
+    target: 'http://localhost:8081',
     changeOrigin: true,
     secure: false
 }]

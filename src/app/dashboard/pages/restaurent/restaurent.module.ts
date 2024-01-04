@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 const routes: Routes = [
   {
@@ -27,7 +28,9 @@ const routes: Routes = [
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatFormFieldModule
-   ]
+    MatFormFieldModule,
+    MatDialogModule,
+    MatSlideToggleModule
+  ]
 })
 export class RestaurentModule { }

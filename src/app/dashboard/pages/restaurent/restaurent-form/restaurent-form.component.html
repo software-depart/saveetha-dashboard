@@ -1,75 +1,51 @@
-<div class="modal fade" id="user" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-                <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add</h5>
-                <button type="button" #closeButton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal-dialog" style="margin: 1.75rem 1.75rem;">
+    <div class="modal-content">
+        <div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+                <button type="button" class="btn-close" mat-dialog-close style="cursor: pointer;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                    {{errorMessage}}
                 </div>
-                <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="userName" name="userName" autocomplete="off" [(ngModel)]="model.userName" placeholder="userName">
-                        <label for="userName">Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
-                        <label for="firstName">Image</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="firstName" name="firstName" autocomplete="off" [(ngModel)]="model.firstName" placeholder="firstName">
-                        <label for="firstName">Food type</label>
-                    </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
+                        placeholder="name">
+                    <label for="userName">Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.food_type"
+                        placeholder="food type">
+                    <label for="firstName">Food type</label>
+                </div>
+                <div class="mb-3">
+                    <label>Location</label>
+                    <select class="form-select w-100 my-2" [(ngModel)]="model.location">
+                        <option selected disabled value="">Select location</option>
+                        <option value="City Campus">City Campus</option>
+                        <option value="Thandalam Campus">Thandalam Campus</option>
+                    </select>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.address"
+                        placeholder="address">
+                    <label for="firstName">Address</label>
+                </div>
+                <div class="d-flex justify-content-between mx-3">
+                    <label>Approve</label>
+                    <mat-slide-toggle [(ngModel)]="model.isApproved" color="primary"></mat-slide-toggle>
+                </div>
 
-                    <div class="mb-3">
-                        <label>Location</label>
-                        <select class="form-select w-100 my-2">
-                            
-                            <option selected>Open this select location</option>
-                            <option value="1">City Campus</option>
-                            <option value="2">Thandalam Campus</option>
-                            
-                          </select>
-
-                    </div>
-  
-                    <div class="d-flex justify-content-between mx-3">
-                      <label>Approve</label>
-                      <div><input class="form-check-input me-1" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."><label class="me-4">Yes</label>
-                          <input class="form-check-input me-1" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="..."><label>No</label>
-                      </div>
-                      
-                    </div>
-  
-                    <div class="d-flex justify-content-between mx-3 mt-4">
-                      <label>Active</label>
-                      <div class="form-check form-switch">
-                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                          <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                        </div>
-                      
-                    </div>
-                    <!-- <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="lastName" name="lastName"  autocomplete="off" [(ngModel)]="model.lastName" placeholder="lastName">
-                        <label for="lastName">Approved</label>
-                    </div> -->
-                    <!-- <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="emailId" name="emailId" autocomplete="off" [(ngModel)]="model.emailId" placeholder="emailId">
-                        <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1" value="" aria-label="...">
-                        <label for="emailId">Active</label>
-                    </div>
-                    
-                    
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="password" name="password" autocomplete="off" [(ngModel)]="model.password" placeholder="password">
-                        <label for="password">Password</label>
-                    </div> -->
+                <div class="d-flex justify-content-between mx-3 mt-4">
+                    <label>Active</label>
+                    <mat-slide-toggle [(ngModel)]="model.isActive" color="primary"></mat-slide-toggle>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-             </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" mat-dialog-close>Close</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{action}}</button>
+            </div>
         </div>
     </div>
-  </div>
-  
+</div>

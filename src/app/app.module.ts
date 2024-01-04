@@ -12,6 +12,8 @@ import { RequestInterceptor } from './services/http/request.interceptor';
 import { ResponseInterceptor } from './services/http/response.interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AlertComponent } from './components/alert/alert.component';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    AlertComponent,
 
   ],
   imports: [
@@ -28,7 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DashboardModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   providers: [
     {

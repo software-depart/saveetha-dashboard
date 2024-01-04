@@ -1,0 +1,15 @@
+<div class="modal-dialog" style="margin: 1.75rem 1.75rem;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">{{title}}</h5>
+            <button type="button" class="btn-close" mat-dialog-close></button>
+        </div>
+        <div class="modal-body">
+            {{message}}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" mat-dialog-close>No</button>
+            <button type="button" class="btn btn-primary" (click)="doOk(true)">Yes</button>
+        </div>
+    </div>
+</div>

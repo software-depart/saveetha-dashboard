@@ -14,9 +14,9 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userProfile = localStorage.getItem('userProfile')
+    this.userProfile = localStorage.getItem('user')
     this.userProfile = JSON.parse(this.userProfile);
-    this.search()
+    // this.search()
   }
 
   search() {
