@@ -113,5 +113,8 @@ export class RestaurentComponent implements OnInit {
     })
   }
 
+  search(): void {
+    
+  }
 }
 
