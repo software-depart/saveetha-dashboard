@@ -47,7 +47,7 @@
 </div>
 
 <div class="container-fluid pt-2 px-4">
-  <div class="bg-light text-center rounded p-4">
+  <div class="bg-light text-center rounded p-4" style="height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Restaurants</h5>
       <button type="button" class="btn btn-primary fs-6" (click)="addRestaurant()">Add</button>
@@ -79,10 +79,13 @@
             <td>{{item.address}}</td>
             <td>{{item.created_at | date: 'MM/dd/yyyy h:mm:ss a'}}</td>
             <td style="text-align: center;">
-              <button type="button" class="btn btn-success btn-sm" style="background-color: rgb(37, 181, 54);"
-                *ngIf="item.isApproved">Approved</button>
-              <button *ngIf="!item.isApproved" type="button" class="btn btn-primary btn-sm"
-                (click)="onApprove(item)" style="cursor: pointer;">Approve</button>
+              <div class="badge badge-pill badge-success" *ngIf="item.isApproved">Approved</div>
+              <div><a *ngIf="!item.isApproved" style="cursor: pointer;" (click)="onApprove(item)"
+                  class="badge badge-primary">Approve</a>
+              </div>
+              <div class="badge badge-pill badge-success" *ngIf="item.isActive">Active</div>
+              <div><a *ngIf="!item.isActive" style="cursor: pointer;" (click)="onMakeActive(item)"
+                  class="badge badge-primary">Make Active</a></div>
 
             </td>
             <td>

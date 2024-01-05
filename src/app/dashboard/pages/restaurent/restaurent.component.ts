@@ -73,7 +73,25 @@ export class RestaurentComponent implements OnInit {
     })
   }
 
-  onSubmit(event: any) { }
+  onMakeActive(resaturant: any): void {
+    const dialogRef = this.dialog.open(AlertComponent, {
+      width: '500px',
+      disableClose: true,
+      data: { title: 'Active Restaurant', message: `Are you sure you want to active ${resaturant.name}?` }
+
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.activeRestaurant(resaturant._id);
+      }
+    })
+  }
+
+  activeRestaurant(id: any): void {
+    this.resaturantService.updateRestaurant(id, { isActive: true }).subscribe(res => {
+      this.getAllRestaurants();
+    })
+  }
 
   onDelete(resaturant: any): void {
     const dialogRef = this.dialog.open(AlertComponent, {
