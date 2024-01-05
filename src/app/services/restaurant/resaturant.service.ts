@@ -9,8 +9,9 @@ export class ResaturantService {
   restaurantBaseURL = '/restaurant'
   constructor(private apiService: ApiService) { }
 
-  getAllRestaurants(): Observable<any> {
-    return this.apiService.get$(this.restaurantBaseURL, {});
+  getAllRestaurants(queryString: any): Observable<any> {
+    let url = `${this.restaurantBaseURL}?${queryString}`
+    return this.apiService.get$(url, {});
   }
 
   createRestaurant(data: any): Observable<any> {

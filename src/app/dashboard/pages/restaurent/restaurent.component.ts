@@ -14,6 +14,8 @@ import { AlertComponent } from 'src/app/components/alert/alert.component';
 export class RestaurentComponent implements OnInit {
   restaurants: any;
   isLoading: boolean | undefined;
+  location: string = '';
+
   constructor(private resaturantService: ResaturantService, private dialog: MatDialog) {
     this.isLoading = true
   }
@@ -29,6 +31,7 @@ export class RestaurentComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
+        this.location = '';
         this.getAllRestaurants();
       }
     })
@@ -47,8 +50,10 @@ export class RestaurentComponent implements OnInit {
   }
 
   getAllRestaurants() {
+    // const queryString = 'location=Thandalam Campus'
+    const queryString = this.createFilterQueryString();
     this.isLoading = true;
-    this.resaturantService.getAllRestaurants().subscribe(res => {
+    this.resaturantService.getAllRestaurants(queryString).subscribe(res => {
       this.isLoading = false;
       this.restaurants = res.data;
     })
@@ -114,7 +119,16 @@ export class RestaurentComponent implements OnInit {
   }
 
   search(): void {
-    
+    this.getAllRestaurants();
   }
+
+  createFilterQueryString() {
+    let queryString = '';
+    if (this.location) {
+      queryString += `${queryString.length > 0 ? '&' : ''} location=${this.location}`
+    }
+    return queryString.trim();
+  }
+
 }
 

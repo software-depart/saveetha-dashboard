@@ -12,15 +12,15 @@
       <div>
         <mat-form-field class="white-backgrounded-field">
           <mat-label>Choose Location</mat-label>
-          <mat-select>
-            <mat-option>City Campus</mat-option>
-            <mat-option>Thandalam Campus</mat-option>
-            <mat-option>All</mat-option>
+          <mat-select [(ngModel)]="location">
+            <mat-option value="City Campus">City Campus</mat-option>
+            <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
+            <mat-option value="">All</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
-      <div style="margin-left: 20px;">
+      <!-- <div style="margin-left: 20px;">
         <mat-form-field>
           <mat-label>Food Court</mat-label>
           <mat-select>
@@ -41,7 +41,7 @@
             <mat-option>All</mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
+      </div> -->
 
     </div>
     <div>
