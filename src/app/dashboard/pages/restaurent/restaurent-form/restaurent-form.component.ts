@@ -1,5 +1,4 @@
-import { Component, ViewChild, Inject, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
 
