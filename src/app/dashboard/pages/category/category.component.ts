@@ -81,7 +81,7 @@ export class CategoryComponent implements OnInit {
     const dialogRef = this.dialog.open(AlertComponent, {
       width: '500px',
       disableClose: true,
-      data: { title: 'Active Category', message: `Are you sure you want to active ${resaturant.name}?` }
+      data: { title: 'Activate Category', message: `Are you sure you want to activate ${resaturant.name}?` }
 
     })
     dialogRef.afterClosed().subscribe(res => {

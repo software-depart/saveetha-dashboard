@@ -1,59 +1,106 @@
 <div class="d-flex mt-2 px-4">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+  <!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
     aria-expanded="false" aria-controls="collapseExample">
     <i class="fa fa-filter" aria-hidden="true"></i>
-Filter
+    Filter
   </button>
 </div>
 
 <div class="container-fluid collapse p-2 px-4" id="collapseExample">
-  <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
-    <div>
-      <mat-form-field  class="white-backgrounded-field">
-        <mat-label>Choose Location</mat-label>
-        <mat-select>
-            <mat-option>City Campus</mat-option>
-            <mat-option>Thandalam Campus</mat-option>
-            <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 0px 25px 0px 18px;">
+    <div class="bg-light text-center rounded p-2 d-flex">
+      <div>
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Location</mat-label>
+          <mat-select [(ngModel)]="location">
+            <mat-option value="City Campus">City Campus</mat-option>
+            <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
+            <mat-option value="">All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div>
-      <mat-form-field>
-        <mat-label>Food Court</mat-label>
-        <mat-select>
+       <div style="margin-left: 20px;">
+        <mat-form-field>
+          <mat-label>Food Court</mat-label>
+          <mat-select>
             <mat-option>One</mat-option>
             <mat-option>Two</mat-option>
             <mat-option>Three</mat-option>
             <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="margin-left: 20px;">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Restaurant</mat-label>
+          <mat-select>
+            <mat-option>One</mat-option>
+            <mat-option>Two</mat-option>
+            <mat-option>Three</mat-option>
+            <mat-option>All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> -->
 
+  <!-- </div>
     <div>
-      <mat-form-field class="white-backgrounded-field">
-        <mat-label>Restaurant</mat-label>
-        <mat-select>
-          <mat-option>One</mat-option>
-          <mat-option>Two</mat-option>
-          <mat-option>Three</mat-option>
-          <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
     </div>
-
   </div>
-</div>
+</div>  -->
 
+  <div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4" style="height: 100vh;">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="mb-0 text-primary">Campuses</h5>
+        <button type="button" class="btn btn-primary btn-sm" (click)="addCampus()">Add Campus</button>
+      </div>
+      <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      </button>
+      <div class="table-responsive" *ngIf="!isLoading && campuses.length > 0">
+        <table class="table text-start  align-middle table-bordered table-hover mb-0">
+          <thead>
+            <tr class="text-dark">
+              <th scope="col">Name</th>
+              <th scope="col">Created by</th>
+              <th scope="col">Updated by</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of campuses; index as i">
+              <td>{{item.name}}</td>
+              <td>{{item.createdBy?.firstName}}</td>
+              <td>{{item.updatedBy?.firstName}}</td>
+              <td style="text-align: center;">
+                <div class="badge badge-pill badge-success" *ngIf="item.isApproved">Approved</div>
+                <div><a *ngIf="!item.isApproved" style="cursor: pointer;" (click)="onApprove(item)"
+                    class="badge badge-primary">Approve</a>
+                </div>
+                <div class="badge badge-pill badge-success" *ngIf="item.isActive">Active</div>
+                <div><a *ngIf="!item.isActive" style="cursor: pointer;" (click)="onMakeActive(item)"
+                    class="badge badge-primary">Activate</a></div>
 
-<div class="container-fluid pt-2 px-4">
-  <div class="bg-light text-center rounded p-4">
-    <div class="d-flex align-items-center justify-content-between mb-4">
-      <h5 class="mb-0 text-primary">Campus</h5>
-      <button type="button" class="btn btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#user">Add</button>
+              </td>
+              <td>
+                <div class='d-flex justify-content-center align-items-center'>
+                  <div style="cursor: pointer; font-size: 14px; padding: 0px 10px;" (click)="updateCampus(item)"><i
+                      class="fa fa-edit"></i>
+                  </div>
+                  <div><i class="fa fa-trash text-danger" (click)="onDelete(item)"
+                      style="cursor: pointer; font-size: 14px;"></i></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex align-items-center justify-content-center" *ngIf="!isLoading && campuses.length === 0">
+        No data found
+      </div>
     </div>
-    
-    <app-campus-form></app-campus-form>
   </div>
-</div>

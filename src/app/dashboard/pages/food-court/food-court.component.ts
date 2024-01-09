@@ -82,7 +82,7 @@ export class FoodCourtComponent implements OnInit {
     const dialogRef = this.dialog.open(AlertComponent, {
       width: '500px',
       disableClose: true,
-      data: { title: 'Active Food court', message: `Are you sure you want to active ${resaturant.name}?` }
+      data: { title: 'Activate Food court', message: `Are you sure you want to activate ${resaturant.name}?` }
 
     })
     dialogRef.afterClosed().subscribe(res => {

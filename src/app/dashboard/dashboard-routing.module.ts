@@ -61,7 +61,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'campus',
+    path: 'all-campuses',
     loadChildren: () => import('./pages/campus/campus.module').then(m => m.CampusModule)
   },
   {

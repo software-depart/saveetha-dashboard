@@ -7,6 +7,9 @@ import { CampusFormComponent } from './campus-form/campus-form.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 const routes: Routes = [
   {
@@ -27,7 +30,9 @@ const routes: Routes = [
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule, 
+    MatSlideToggleModule
 
   ]
 })
