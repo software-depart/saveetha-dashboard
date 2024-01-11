@@ -36,11 +36,11 @@ export class FoodCourtComponent implements OnInit {
       }
     })
   }
-  updateFoodcourt(restaurant: any): void {
+  updateFoodcourt(foodcourt: any): void {
     const dialogRef = this.dialog.open(FoodFormComponent, {
       width: '500px',
       disableClose: true,
-      data: restaurant
+      data: foodcourt
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
@@ -50,7 +50,6 @@ export class FoodCourtComponent implements OnInit {
   }
 
   getAllFoodcourts() {
-    // const queryString = 'location=Thandalam Campus'
     const queryString = this.createFilterQueryString();
     this.isLoading = true;
     this.foodcourtService.getAllFoodcourts(queryString).subscribe(res => {
@@ -67,12 +66,13 @@ export class FoodCourtComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.approveRestaurant(resaturant._id);
+        this.approveFoodcourt(resaturant._id);
       }
     })
   }
 
-  approveRestaurant(id: any): void {
+  approveFoodcourt(id: any): void {
+    this.isLoading = true;
     this.foodcourtService.updateFoodcourt(id, { isApproved: true }).subscribe(res => {
       this.getAllFoodcourts();
     })
@@ -87,12 +87,13 @@ export class FoodCourtComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.activeRestaurant(resaturant._id);
+        this.activeFoodcourt(resaturant._id);
       }
     })
   }
 
-  activeRestaurant(id: any): void {
+  activeFoodcourt(id: any): void {
+    this.isLoading = true;
     this.foodcourtService.updateFoodcourt(id, { isActive: true }).subscribe(res => {
       this.getAllFoodcourts();
     })
@@ -107,11 +108,11 @@ export class FoodCourtComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.deleteRestaurant(resaturant._id);
+        this.deleteFoodcourt(resaturant._id);
       }
     })
   }
-  deleteRestaurant(id: string): void {
+  deleteFoodcourt(id: string): void {
     this.isLoading = true;
     this.foodcourtService.deleteFoodcourt(id).subscribe(res => {
       this.getAllFoodcourts();

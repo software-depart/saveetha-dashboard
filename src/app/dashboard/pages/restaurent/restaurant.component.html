@@ -60,7 +60,7 @@
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Loading...
     </button>
-    <div class="table-responsive" *ngIf="!isLoading">
+    <div class="table-responsive" *ngIf="!isLoading && restaurants.length > 0">
       <table class="table text-start  align-middle table-bordered table-hover mb-0">
         <thead>
           <tr class="text-dark">
@@ -89,7 +89,7 @@
               </div>
               <div class="badge badge-pill badge-success" *ngIf="item.isActive">Active</div>
               <div><a *ngIf="!item.isActive" style="cursor: pointer;" (click)="onMakeActive(item)"
-                  class="badge badge-primary">Make Active</a></div>
+                  class="badge badge-primary">Activate</a></div>
 
             </td>
             <td>

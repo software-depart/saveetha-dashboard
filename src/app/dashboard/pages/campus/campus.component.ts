@@ -72,6 +72,7 @@ export class CampusComponent implements OnInit {
   }
 
   approveCampus(id: any): void {
+    this.isLoading = true;
     this.campusService.updateCampus(id, { isApproved: true }).subscribe(res => {
       this.getAllCampuses();
     })
@@ -92,6 +93,7 @@ export class CampusComponent implements OnInit {
   }
 
   activeCampus(id: any): void {
+    this.isLoading = true;
     this.campusService.updateCampus(id, { isActive: true }).subscribe(res => {
       this.getAllCampuses();
     })

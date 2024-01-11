@@ -39,8 +39,6 @@ export class UserService {
     return this.httpClient.delete(url);
   }
 
-  getUser() { }
-
   searchUser() {
     let url: any = environment.user + '/';
     return this.httpClient.get(url);

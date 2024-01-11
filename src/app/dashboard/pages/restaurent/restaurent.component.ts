@@ -73,6 +73,7 @@ export class RestaurentComponent implements OnInit {
   }
 
   approveRestaurant(id: any): void {
+    this.isLoading = true;
     this.resaturantService.updateRestaurant(id, { isApproved: true }).subscribe(res => {
       this.getAllRestaurants();
     })
@@ -93,6 +94,7 @@ export class RestaurentComponent implements OnInit {
   }
 
   activeRestaurant(id: any): void {
+    this.isLoading = true;
     this.resaturantService.updateRestaurant(id, { isActive: true }).subscribe(res => {
       this.getAllRestaurants();
     })

@@ -18,7 +18,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'subcategory',
+    path: 'subcategories',
     loadChildren: () => import('./pages/sub-category/sub-category.module').then(m => m.SubCategoryModule)
   },
 
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'item',
+    path: 'all-items',
     loadChildren: () => import('./pages/item/item.module').then(m => m.ItemModule)
   },
 
@@ -43,12 +43,12 @@ const routes: Routes = [
   },
 
   {
-    path: 'order',
+    path: 'all-orders',
     loadChildren: () => import('./pages/order/order.module').then(m => m.OrderModule)
   },
 
   {
-    path: 'payment',
+    path: 'all-payments',
     loadChildren: () => import('./pages/payment/payment.module').then(m => m.PaymentModule)
   },
   {
