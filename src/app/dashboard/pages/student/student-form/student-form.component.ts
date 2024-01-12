@@ -1,29 +1,102 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-student-form',
   templateUrl: './student-form.component.html',
-  styleUrls: ['./student-form.component.css']
+  styleUrls: ['./student-form.component.scss']
 })
-export class StudentFormComponent implements OnInit{
-  @Input() name:string=""
-  
-  model:any = {}
-  constructor() {}
+export class StudentFormComponent implements OnInit {
+  model: any = {
+    isActive: false,
+    location: '',
+    userId: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    collegeType: '',
+    mobileNo: '',
+    alternateNo: '',
+    type: ''
+  }
+  types = ['Super Admin', 'Admin', 'Student', 'Restaurant', 'Technician'];
+  action: string = 'Create'
+  title: string = 'Create User'
+  mode: string = 'create'
+  errorMessage: string = '';
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<StudentFormComponent>,
+    private userService: UserService) { }
 
   ngOnInit(): void {
-   
+    if (this.userService.isAdmin()) {
+      this.types = ['Student', 'Restaurant', 'Technician']
+    }
+    if (this.data) {
+      this.mode = 'update';
+      this.model = {
+        isActive: this.data.isActive,
+        location: this.data.location,
+        userId: this.data.userId,
+        firstName: this.data.firstName,
+        lastName: this.data.lastName,
+        mobileNo: this.data.mobileNo,
+        alternateNo: this.data.alternateNo,
+        address: this.data.address,
+        collegeType: this.data.collegeType,
+        type: this.data.type
+      }
+      this.action = 'Update'
+      this.title = 'Update User'
+    }
   }
 
-  onSubmit(form: NgForm) {
-   
+  onSubmit() {
+    if (!this.validModel(this.model)) {
+      this.errorMessage = 'Please fill in all the fields.'
+      return;
+    } else {
+      if (!this.validMobileNo(this.model.mobileNo)) {
+        this.errorMessage = 'Mobile number is invalid'
+        return;
+      }
+      if (this.model.alternateNo && !this.validMobileNo(this.model.alternateNo)) {
+        this.errorMessage = 'Alternate mobile number is invalid'
+        return;
+      }
+    }
+    if (this.mode === 'create') {
+      this.userService.createUser(this.model).subscribe(res => {
+        this.closeModal(true)
+      }, err => {
+        this.errorMessage = err?.error?.error?.message || 'Server failure. Please try again later';
+      })
+    } else {
+      this.userService.updateUser(this.data._id, this.model).subscribe(res => {
+        this.closeModal(true)
+      }, err => {
+        this.errorMessage = err?.error?.error?.message || 'Server failure. Please try again later';
+      })
+    }
   }
-
-  @ViewChild('closeButton',{static: true}) closebutton: any;
-  closeModal() {
-    this.closebutton.nativeElement.click()
+  validModel(obj: any) {
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (obj[key] === '') {
+          if (key !== 'alternateNo' && key !== 'lastName') {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
   }
-
-
+  closeModal(reload: boolean): void {
+    this.dialogRef.close(reload);
+  }
+  validMobileNo(mobile: string) {
+    return /^\d{10}$/.test(mobile)
+  }
 }

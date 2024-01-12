@@ -4,14 +4,14 @@ import { UserComponent } from './pages/user/user.component';
 
 const routes: Routes = [
   {
-    path: 'user',
+    path: 'dashboard',
     loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
   },
-{
-  path:'',
-  redirectTo:'user',
-  pathMatch:'full'
-},
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
   {
     path: 'categories',
     loadChildren: () => import('./pages/category/category.module').then(m => m.CategoryModule)
@@ -28,7 +28,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'student',
+    path: 'all-users',
     loadChildren: () => import('./pages/student/student.module').then(m => m.StudentModule)
   },
 

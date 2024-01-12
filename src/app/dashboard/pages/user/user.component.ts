@@ -20,14 +20,14 @@ export class UserComponent implements OnInit {
   }
 
   search() {
-    this.userService.searchUser().subscribe((data: any) => {
+    this.userService.getAllUsers('').subscribe((data: any) => {
       this.users = data.data
     })
   }
 
   onSubmit(event: any) {
     if(event._id) {
-      this.userService.updateUser(event).subscribe((data: any) => {
+      this.userService.updateUser('id', event).subscribe((data: any) => {
        this.search();
       })
     } else {
@@ -45,7 +45,7 @@ export class UserComponent implements OnInit {
 
   isApproved(input: any) {
     input.isApproved = true;
-    this.userService.updateUser(input).subscribe((data: any) => {
+    this.userService.updateUser('id', input).subscribe((data: any) => {
       this.search();
     })
   }

@@ -1,105 +1,88 @@
 <div class="d-flex mt-2 px-4">
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-    aria-expanded="false" aria-controls="collapseExample">
-    <i class="fa fa-filter" aria-hidden="true"></i>
-Filter
+  <button style="margin-left: 25px;" class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse"
+    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    <i class="fa fa-filter" style="font-size: 12px;" aria-hidden="true"></i>
+    Filter
   </button>
 </div>
 
 <div class="container-fluid collapse p-2 px-4" id="collapseExample">
-  <div class="bg-light text-center rounded p-2 d-flex justify-content-between">
-    <div>
-      <mat-form-field  class="white-backgrounded-field">
-        <mat-label>Choose Location</mat-label>
-        <mat-select>
-            <mat-option>City Campus</mat-option>
-            <mat-option>Thandalam Campus</mat-option>
-            <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 0px 25px 0px 18px;">
+    <div class="bg-light text-center rounded p-2 d-flex">
+      <div>
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Location</mat-label>
+          <mat-select [(ngModel)]="location">
+            <mat-option value="City Campus">City Campus</mat-option>
+            <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
+            <mat-option value="">All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-
-    <!-- <div>
-      <mat-form-field>
-        <mat-label>Food Court</mat-label>
-        <mat-select>
-            <mat-option>One</mat-option>
-            <mat-option>Two</mat-option>
-            <mat-option>Three</mat-option>
-            <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> -->
-
-    <!-- <div>
-      <mat-form-field class="white-backgrounded-field">
-        <mat-label>Restaurant</mat-label>
-        <mat-select>
-          <mat-option>One</mat-option>
-          <mat-option>Two</mat-option>
-          <mat-option>Three</mat-option>
-          <mat-option>All</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> -->
-
+    <div>
+      <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
+    </div>
   </div>
 </div>
-  
-  
-  <div class="container-fluid pt-2 px-4">
-    <div class="bg-light text-center rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h5 class="mb-0 text-primary">Student</h5>
-            <form class="d-none d-md-flex ms-4" style="width: 40%;">
-              <input class="form-control border-0" type="search" placeholder="Search">
-          </form>
-            <button type="button"  class="btn btn-primary fs-6" data-bs-toggle="modal" data-bs-target="#user">Add</button>
-        </div>
-         <!-- user model -->
-        
-        <div class="table-responsive">
-            <table class="table text-start  align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark">
-                      <th scope="col">S.No</th>
-                        <th scope="col">User ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Mobile No.</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">College</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Reset</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
-                      
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <td>1.</td>
-                        <td>10250</td>
-                        <td>Anandh</td>
-                        <td>98765 43210</td>
-                        <td>500</td>
-                        <td>Dental</td>
-                        <td>Thandalam</td>
-                        <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm">Reset</button></td>
-                        <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm" style="background-color: rgb(37, 181, 54);">Active</button></td>
-                        <td>
-                          <div class='d-flex justify-content-around'>
-                            <div (click)="delete('edit')" data-bs-toggle="modal" data-bs-target="#user" ><i class="fa fa-edit"></i></div>
-                            <div (click)="delete('delete')" data-bs-toggle="modal" data-bs-target="#user" ><i class="fa fa-trash text-danger"></i></div>
-                            
-                        </div>
-                             <!-- user model -->
-                            <app-student-form [name]="names"></app-student-form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+<div class="container-fluid pt-2 px-4">
+  <div class="bg-light text-center rounded p-4" style="height: 100vh;">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h5 class="mb-0 text-primary">Users</h5>
+      <button *ngIf="userService.isAdmin() || userService.isSuperAdmin()" type="button" class="btn btn-primary btn-sm"
+        (click)="addUser()">Add User</button>
     </div>
+    <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+    </button>
+    <div class="table-responsive" *ngIf="!isLoading && users.length > 0">
+      <table class="table text-start  align-middle table-bordered table-hover mb-0">
+        <thead>
+          <tr class="text-dark">
+            <th scope="col">S.No.</th>
+            <th scope="col">User ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile No.</th>
+            <th scope="col">CollegeType</th>
+            <th scope="col">Location</th>
+            <th scope="col">Address</th>
+            <th scope="col">Status</th>
+            <th scope="col" *ngIf="userService.isAdmin()">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of users; index as i">
+            <td>{{i+1}}</td>
+            <td>{{item.userId}}</td>
+            <td>{{item.firstName}}</td>
+            <td>{{item.mobileNo}}</td>
+            <td>{{item.collegeType}}</td>
+            <td>{{item.location}}</td>
+            <td>{{item.address}}</td>
+            <td style="text-align: center;">
+              <div class="badge badge-pill badge-success" *ngIf="item.isActive">Active</div>
+              <div class="badge badge-pill badge-warning" *ngIf="!item.isActive && !userService.isAdmin()">Inactive
+              </div>
+              <div><a *ngIf="!item.isActive && userService.isAdmin()" style="cursor: pointer;"
+                  (click)="onMakeActive(item)" class="badge badge-primary">Activate</a></div>
+
+            </td>
+            <td *ngIf="userService.isAdmin()">
+              <div class='d-flex justify-content-around align-items-center'>
+                <div style="cursor: pointer; font-size: 14px;" (click)="updateUser(item)"><i class="fa fa-edit"></i>
+                </div>
+                <div><i class="fa fa-trash text-danger" (click)="onDelete(item)"
+                    style="cursor: pointer; font-size: 14px;"></i></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="!isLoading && users.length === 0">
+      No data found
+    </div>
+  </div>
 </div>
-
-

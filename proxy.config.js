@@ -1,5 +1,5 @@
 const PROXY_CONFIG = [{
-    context: ['/auth', '/restaurant', '/category', '/food-court', '/campus', '/subcategory', '/order', '/payment', '/item'],
+    context: ['/auth', '/restaurant', '/category', '/food-court', '/campus', '/subcategory', '/order', '/payment', '/item', '/user'],
     target: 'http://localhost:8081',
     changeOrigin: true,
     secure: false

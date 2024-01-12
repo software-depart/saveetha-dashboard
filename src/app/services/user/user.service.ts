@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs'
 import { ApiService } from '../common/api.service'
 
@@ -12,6 +10,7 @@ import { ApiService } from '../common/api.service'
 
 export class UserService {
   signinURL = '/auth/login'
+  usersBaseURL = '/user'
 
   constructor(
     private httpClient: HttpClient,
@@ -19,29 +18,23 @@ export class UserService {
     private apiService: ApiService
   ) { }
 
-  createUser(input: any) {
-    let url: any = environment.user + '/'
-    return this.httpClient.post(url, input)
+  getAllUsers(queryString: any): Observable<any> {
+    let url = `${this.usersBaseURL}?${queryString}`
+    return this.apiService.get$(url, {});
   }
 
-  updateUser(input: any) {
-    let url: any = environment.user + '/' + input._id
-    return this.httpClient.put(url, input).pipe(
-      map((data: any) => {
-        localStorage.setItem('userProfile::', JSON.stringify(data));
-        return data
-      })
-    );
+  createUser(data: any): Observable<any> {
+    return this.apiService.post$(this.usersBaseURL, data);
   }
 
-  deleteUser(id: any) {
-    let url: any = environment.user + '/' + id;
-    return this.httpClient.delete(url);
+  updateUser(id: string, data: any): Observable<any> {
+    const url = `${this.usersBaseURL}/${id}`
+    return this.apiService.put$(url, data);
   }
 
-  searchUser() {
-    let url: any = environment.user + '/';
-    return this.httpClient.get(url);
+  deleteUser(id: string): Observable<any> {
+    const url = `${this.usersBaseURL}/${id}`
+    return this.apiService.delete$(url, {});
   }
 
   signin$(data: any): Observable<any> {
@@ -55,5 +48,18 @@ export class UserService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/login'])
+  }
+  getUser() {
+    let user = localStorage.getItem('user')
+    const parsedUser = user ? JSON.parse(user) : null
+    return parsedUser.userInfo;
+  }
+  isAdmin() {
+    const user = this.getUser();
+    return user.type === 'Admin';
+  }
+  isSuperAdmin() {
+    const user = this.getUser();
+    return user.type === 'Super Admin';
   }
 }

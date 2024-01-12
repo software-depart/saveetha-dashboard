@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if(!form.invalid) {
-      this.userService.updateUser(this.model).subscribe((data: any) => {
+      this.userService.updateUser('id', this.model).subscribe((data: any) => {
           console.log('data::',data);
       })
     }
