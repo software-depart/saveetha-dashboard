@@ -55,7 +55,7 @@
             <td>{{item.name}}</td>
             <td>{{item.restaurantsCount}}</td>
             <td>{{item.createdBy?.firstName}}</td>
-            <td>{{item.created_at | date: 'MM/dd/yyyy h:mm:ss a'}}</td>
+            <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
             <td style="text-align: center;">
               <div class="badge badge-pill badge-success" *ngIf="item.isApproved">Approved</div>
               <div><a *ngIf="!item.isApproved" style="cursor: pointer;" (click)="onApprove(item)"

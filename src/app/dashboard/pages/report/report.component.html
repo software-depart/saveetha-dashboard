@@ -1,4 +1,4 @@
-<div class="d-flex mt-2 px-4">
+<!-- <div class="d-flex mt-2 px-4">
   <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
     aria-expanded="false" aria-controls="collapseExample">
     <i class="fa fa-filter" aria-hidden="true"></i>
@@ -63,65 +63,54 @@ Filter
     </div>
 
   </div>
-</div>
+</div> -->
+<div class="container-fluid pt-2 px-4">
+  <div class="bg-light text-center rounded p-2">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <h5 class="mb-0 text-primary">Reports</h5>
 
-
-<div class="container-fluid pt-2 px-4" *ngIf="(selectReport != 'Restaurant Feedback') && (selectReport != 'Location Feedback')">
-    <div class="bg-light text-center rounded p-2">
-        <div class="d-flex align-items-center justify-content-between mb-2">
-            <h5 class="mb-0 text-primary">Report</h5>
-
-        </div>
-
-        <div class="d-flex justify-content-between mt-4">
-            <div>
-                <select class="form-select" aria-label="Default select example">
-                    <option>Select Location</option>
-                    <option value="1">City Campus</option>
-                    <option value="2">Thandalam</option>
-                    <option value="2">All</option>
-                    
-                </select>
-            </div>
-
-            <div class="d-flex justify-content-between gap-2 text-center">
-                <p>From</p>
-                <div>
-                    <input type="text" mwlFlatpickr [(ngModel)]="model.start" [altInput]="true"
-                        [convertModelValue]="true" />
-                </div>
-
-            </div>
-
-            <div class="d-flex justify-content-between gap-2 text-center">
-                <p>To</p>
-                <div>
-                    <input type="text" mwlFlatpickr [(ngModel)]="model.end" [altInput]="true"
-                        [convertModelValue]="true" />
-                </div>
-
-            </div>
-
-            <div><button type="button" class="btn btn-primary">Search</button></div>
-
-            <div><i class="fa fa-download text-primary" aria-hidden="true" aria-hidden="true" style="font-size: 30px;"></i></div>
-
-        </div>
     </div>
+
+    <div class="d-flex justify-content-between mt-4 align-items-center">
+      <div>
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Report Type</mat-label>
+          <mat-select [(ngModel)]="report.type">
+            <mat-option value="restaurant">Restaurant</mat-option>
+            <mat-option value="location" disabled="true">Location</mat-option>
+            <mat-option value="item" disabled="true">Item</mat-option>
+            <mat-option value="individual" disabled="true">Individual</mat-option>
+            <mat-option value="weekly" disabled="true">Weekly</mat-option>
+            <mat-option value="monthly" disabled="true">Monthly</mat-option>
+            <mat-option value="location Feedback" disabled="true">Location Feedback</mat-option>
+            <mat-option value="restaurant Feedback" disabled="true">Restaurant Feedback</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="d-flex justify-content-between gap-2 text-center">
+        <p>From</p>
+        <div>
+          <input type="text" mwlFlatpickr [(ngModel)]="report.start" [altInput]="true" [convertModelValue]="true" />
+        </div>
+
+      </div>
+
+      <div class="d-flex justify-content-between gap-2 text-center">
+        <p>To</p>
+        <div>
+          <input type="text" mwlFlatpickr [(ngModel)]="report.end" [altInput]="true" [convertModelValue]="true" />
+        </div>
+      </div>
+      <div><button type="button" class="btn btn-primary" (click)="downloadReport()" [disabled]="!report.type">Download
+          report</button></div>
+    </div>
+  </div>
 </div>
 
 
-<div class="d-flex px-4" *ngIf="(selectReport == 'Restaurant Feedback') || (selectReport == 'Location Feedback')">
-  <canvas
-  baseChart
-  class="chart"
-  [data]="barChartData"
-  [options]="barChartOptions"
-  [plugins]="barChartPlugins"
-  [type]="barChartType"
-  (chartHover)="chartHovered($event)"
-  (chartClick)="chartClicked($event)"
-    height="100px"
->
-</canvas>
-</div>
+<!-- <div class="d-flex px-4" *ngIf="(selectReport == 'Restaurant Feedback') || (selectReport == 'Location Feedback')">
+  <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+    [type]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" height="100px">
+  </canvas>
+</div> -->

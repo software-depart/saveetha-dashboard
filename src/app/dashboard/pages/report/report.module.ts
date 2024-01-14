@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReportComponent } from './report.component';
+import { ReportsComponent } from './report.component';
 import { Routes,RouterModule } from '@angular/router';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { FormsModule } from '@angular/forms';
@@ -12,14 +12,14 @@ import { NgChartsModule } from 'ng2-charts';
 const routes: Routes = [
   {
     path: '',
-    component: ReportComponent
+    component: ReportsComponent
     
   }
 ];
 
 @NgModule({
   declarations: [
-    ReportComponent
+    ReportsComponent
   ],
   imports: [
     CommonModule,

@@ -52,7 +52,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/payment/payment.module').then(m => m.PaymentModule)
   },
   {
-    path: 'report',
+    path: 'all-reports',
     loadChildren: () => import('./pages/report/report.module').then(m => m.ReportModule)
   },
   {

@@ -1,89 +1,37 @@
 import { Component, ViewChild } from '@angular/core';
 import { startOfDay } from 'date-fns';
-import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  styleUrls: ['./report.component.scss']
 })
-export class ReportComponent {
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
- public selectReport: any = ''
- public model: any = {
-  start: startOfDay(new Date()),
-  end: startOfDay(new Date()),
- }
+export class ReportsComponent {
+  public report: any = {
+    type: '',
+    start: startOfDay(new Date()),
+    end: startOfDay(new Date()),
+  }
+  constructor(private http: HttpClient) { }
 
- changeReport(event: any) {
-  this.selectReport = event;
-  console.log('this.::',this.selectReport)
- }
+  downloadReport() {
+    this.http.post('/reports', this.report, { responseType: 'text' })
+      .subscribe((csvData: string) => {
+        this.downloadFile(csvData, `${this.report.type}_reports.csv`);
+      });
+  }
+  downloadFile(data: string, filename: string) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
 
- public barChartOptions: ChartConfiguration['options'] = {
-  // We use these empty structures as placeholders for dynamic theming.
-  scales: {
-    x: {},
-    y: {
-      min: 10,
-    },
-  },
-  plugins: {
-    legend: {
-      display: true,
-    },
-    datalabels: {
-      anchor: 'end',
-      align: 'end',
-    },
-  },
-};
-public barChartType: ChartType = 'bar';
-public barChartPlugins = [DataLabelsPlugin];
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
 
-public barChartData: ChartData<'bar'> = {
-  labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-  datasets: [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-  ],
-};
-
-// events
-public chartClicked({
-  event,
-  active,
-}: {
-  event?: ChartEvent;
-  active?: object[];
-}): void {
-  console.log(event, active);
-}
-
-public chartHovered({
-  event,
-  active,
-}: {
-  event?: ChartEvent;
-  active?: object[];
-}): void {
-  console.log(event, active);
-}
-
-public randomize(): void {
-  // Only Change 3 values
-  this.barChartData.datasets[0].data = [
-    Math.round(Math.random() * 100),
-    59,
-    80,
-    Math.round(Math.random() * 100),
-    56,
-    Math.round(Math.random() * 100),
-    40,
-  ];
-
-  this.chart?.update();
-}
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
 }
