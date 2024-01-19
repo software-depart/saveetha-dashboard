@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
+import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service';
 
 @Component({
   selector: 'app-restaurent-form',
@@ -8,7 +9,7 @@ import { ResaturantService } from 'src/app/services/restaurant/resaturant.servic
   styleUrls: ['./restaurent-form.component.scss']
 })
 export class RestaurentFormComponent implements OnInit {
-
+  foodcourts: any;
   model: any = {
     isApproved: false,
     isActive: false,
@@ -16,6 +17,7 @@ export class RestaurentFormComponent implements OnInit {
     name: '',
     food_type: '',
     address: '',
+    foodcourt: ''
   }
   action: string = 'Create'
   title: string = 'Create Restaurant'
@@ -24,9 +26,10 @@ export class RestaurentFormComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<RestaurentFormComponent>,
-    private resaturantService: ResaturantService) { }
+    private resaturantService: ResaturantService, private foodcourtService: FoodcourtService) { }
 
   ngOnInit(): void {
+    this.getAllFoodcourts()
     if (this.data) {
       this.mode = 'update';
       this.model = {
@@ -36,6 +39,7 @@ export class RestaurentFormComponent implements OnInit {
         name: this.data.name,
         food_type: this.data.food_type,
         address: this.data.address,
+        foodcourt: this.data.foodcourt._id
       }
       this.action = 'Update'
       this.title = 'Update Restaurant'
@@ -73,6 +77,12 @@ export class RestaurentFormComponent implements OnInit {
   }
   closeModal(reload: boolean): void {
     this.dialogRef.close(reload);
+  }
+
+  getAllFoodcourts() {
+    this.foodcourtService.getAllFoodcourts('').subscribe(res => {
+      this.foodcourts = res.data;
+    })
   }
 
 }

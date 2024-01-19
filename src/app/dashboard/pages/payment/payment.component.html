@@ -14,6 +14,7 @@
             <tr class="text-dark">
               <th scope="col">S.No.</th>
               <th scope="col">Name</th>
+              <th scope="col">User Type</th>
               <th scope="col">Amount</th>
               <th scope="col">Reference Number</th>
               <th scope="col">Status</th>
@@ -22,7 +23,8 @@
           <tbody>
             <tr *ngFor="let item of payments; index as i">
               <td>{{i+1}}</td>
-              <td>{{item.userId.firstName}}</td>
+              <td>{{item.userId?.firstName}}</td>
+              <td>{{item.userId?.type}}</td>
               <td>{{item.amount}}</td>
               <td>{{item.razorpayOrderId}}</td>
               <td>

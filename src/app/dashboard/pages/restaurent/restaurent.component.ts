@@ -3,7 +3,7 @@ import { ResaturantService } from 'src/app/services/restaurant/resaturant.servic
 import { MatDialog } from '@angular/material/dialog'
 import { RestaurentFormComponent } from './restaurent-form/restaurent-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
-
+import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
 
 @Component({
   selector: 'app-restaurent',
@@ -13,15 +13,18 @@ import { AlertComponent } from 'src/app/components/alert/alert.component';
 
 export class RestaurentComponent implements OnInit {
   restaurants: any;
+  foodcourts: any;
+  filteredFoodcourts: any;
   isLoading: boolean | undefined;
-  location: string = '';
-
-  constructor(private resaturantService: ResaturantService, private dialog: MatDialog) {
+  location = null
+  foodcourt: string = '';
+  constructor(private resaturantService: ResaturantService, private dialog: MatDialog, private foodcourtService: FoodcourtService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
     this.getAllRestaurants();
+    this.getAllFoodcourts();
   }
 
   addRestaurant() {
@@ -31,7 +34,7 @@ export class RestaurentComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.location = '';
+        this.location = null;
         this.getAllRestaurants();
       }
     })
@@ -127,10 +130,26 @@ export class RestaurentComponent implements OnInit {
   createFilterQueryString() {
     let queryString = '';
     if (this.location) {
-      queryString += `${queryString.length > 0 ? '&' : ''} location=${this.location}`
+      queryString += `${queryString.length > 0 ? '&' : ''}location=${this.location}`
+    }
+    if (this.foodcourt) {
+      queryString += `${queryString.length > 0 ? '&' : ''}foodcourt=${this.foodcourt}`
     }
     return queryString.trim();
   }
-
+  getAllFoodcourts() {
+    this.foodcourtService.getAllFoodcourts('').subscribe(res => {
+      this.foodcourts = res.data;
+      this.filteredFoodcourts = res.data;
+    })
+  }
+  onChangeLocation() {
+    this.foodcourt = '';
+    if (this.location === '') {
+      this.filteredFoodcourts = [...this.foodcourts];
+    } else {
+      this.filteredFoodcourts = this.foodcourts.filter((item: any) => item.location && item.location === this.location);
+    }
+  }
 }
 

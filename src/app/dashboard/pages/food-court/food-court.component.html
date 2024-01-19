@@ -43,6 +43,7 @@
             <th scope="col">S.No.</th>
             <th scope="col">Name</th>
             <th scope="col">Restaurants count</th>
+            <th scope="col">Location</th>
             <th scope="col">Created by</th>
             <th scope="col">Created on</th>
             <th scope="col">Status</th>
@@ -54,6 +55,7 @@
             <td>{{i+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.restaurantsCount}}</td>
+            <td>{{item.location}}</td>
             <td>{{item.createdBy?.firstName}}</td>
             <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
             <td style="text-align: center;">

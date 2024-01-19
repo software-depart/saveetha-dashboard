@@ -12,37 +12,26 @@
       <div>
         <mat-form-field class="white-backgrounded-field">
           <mat-label>Choose Location</mat-label>
-          <mat-select [(ngModel)]="location">
+          <mat-select [(ngModel)]="location" (ngModelChange)="onChangeLocation()">
             <mat-option value="City Campus">City Campus</mat-option>
             <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
             <mat-option value="">All</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-
-      <!-- <div style="margin-left: 20px;">
-        <mat-form-field>
-          <mat-label>Food Court</mat-label>
-          <mat-select>
-            <mat-option>One</mat-option>
-            <mat-option>Two</mat-option>
-            <mat-option>Three</mat-option>
-            <mat-option>All</mat-option>
+      <div style="margin-left: 20px;" *ngIf="location !== null">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Foodcourt</mat-label>
+          <mat-select [(ngModel)]="foodcourt">
+            <mat-option *ngFor="let foodcourt of filteredFoodcourts" value="{{foodcourt._id}}">
+              {{foodcourt.name}}
+            </mat-option>
+            <mat-option *ngIf="filteredFoodcourts.length === 0" [disabled]="true">
+              No Results
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div style="margin-left: 20px;">
-        <mat-form-field class="white-backgrounded-field">
-          <mat-label>Restaurant</mat-label>
-          <mat-select>
-            <mat-option>One</mat-option>
-            <mat-option>Two</mat-option>
-            <mat-option>Three</mat-option>
-            <mat-option>All</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div> -->
-
     </div>
     <div>
       <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
@@ -67,6 +56,7 @@
             <th scope="col">S.No.</th>
             <th scope="col">Name</th>
             <th scope="col">Location</th>
+            <th scope="col">Food court name</th>
             <th scope="col">Food</th>
             <th scope="col">Address</th>
             <th scope="col">Created on</th>
@@ -79,6 +69,7 @@
             <td>{{i+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.location}}</td>
+            <td>{{item.foodcourt?.name}}</td>
             <td>{{item.food_type}}</td>
             <td>{{item.address}}</td>
             <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>

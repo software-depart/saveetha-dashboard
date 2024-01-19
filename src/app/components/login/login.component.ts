@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     }
     this.userService.signin$(payLoad).subscribe((res: any) => {
       this.userService.setUser$(res.data)
-      this.router.navigate(['/'])
+      this.router.navigate(['/dashboard'])
     }, err => {
       this.errorMessage = err?.error?.error?.message || 'Server failure. Please try again later';
     })

@@ -11,10 +11,6 @@ const routes: Routes = [
     path: '',
     component: UserComponent
   },
-  {
-    path: 'profile',
-    component: ProfileComponent
-  }
 ];
 
 

@@ -5,7 +5,7 @@ import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service';
 @Component({
   selector: 'app-food-form',
   templateUrl: './food-form.component.html',
-  styleUrls: ['./food-form.component.css']
+  styleUrls: ['./food-form.component.scss']
 })
 export class FoodFormComponent implements OnInit {
 
@@ -13,7 +13,8 @@ export class FoodFormComponent implements OnInit {
     isApproved: false,
     isActive: false,
     name: '',
-    restaurantsCount: ''
+    restaurantsCount: '',
+    location: ''
   }
   action: string = 'Create'
   title: string = 'Create Food court'
@@ -31,7 +32,8 @@ export class FoodFormComponent implements OnInit {
         isApproved: this.data.isApproved,
         isActive: this.data.isActive,
         name: this.data.name,
-        restaurantsCount: this.data.restaurantsCount
+        restaurantsCount: this.data.restaurantsCount,
+        location: this.data.location
       }
       this.action = 'Update'
       this.title = 'Update Food court'

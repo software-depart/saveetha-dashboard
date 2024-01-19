@@ -11,7 +11,7 @@
     <div class="bg-light text-center rounded p-2 d-flex">
       <div>
         <mat-form-field class="white-backgrounded-field">
-          <mat-label>Choose Location</mat-label>
+          <mat-label>Choose Category</mat-label>
           <mat-select [(ngModel)]="category">
             <mat-option *ngFor="let category of categories" value="{{category._id}}">
               {{category.name}}

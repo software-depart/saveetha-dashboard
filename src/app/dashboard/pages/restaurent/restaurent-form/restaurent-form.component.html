@@ -9,6 +9,23 @@
                 <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
                     {{errorMessage}}
                 </div>
+                <div class="mb-3">
+                    <label>Location</label>
+                    <select class="form-select w-100 my-2" [(ngModel)]="model.location">
+                        <option selected disabled value="">Select location</option>
+                        <option value="City Campus">City Campus</option>
+                        <option value="Thandalam Campus">Thandalam Campus</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label>Food court</label>
+                    <select class="form-select w-100 my-2" [(ngModel)]="model.foodcourt">
+                        <option selected disabled value="">Select Food court</option>
+                        <option *ngFor="let foodcourt of foodcourts" value="{{foodcourt._id}}">
+                            {{foodcourt.name}}
+                        </option>
+                    </select>
+                </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
                         placeholder="name">
@@ -18,14 +35,6 @@
                     <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.food_type"
                         placeholder="food type">
                     <label for="firstName">Food type</label>
-                </div>
-                <div class="mb-3">
-                    <label>Location</label>
-                    <select class="form-select w-100 my-2" [(ngModel)]="model.location">
-                        <option selected disabled value="">Select location</option>
-                        <option value="City Campus">City Campus</option>
-                        <option value="Thandalam Campus">Thandalam Campus</option>
-                    </select>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.address"

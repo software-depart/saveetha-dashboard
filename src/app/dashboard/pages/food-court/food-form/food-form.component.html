@@ -9,6 +9,14 @@
                 <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
                     {{errorMessage}}
                 </div>
+                <div class="mb-3">
+                    <label>Location</label>
+                    <select class="form-select w-100 my-2" [(ngModel)]="model.location">
+                        <option selected disabled value="">Select location</option>
+                        <option value="City Campus">City Campus</option>
+                        <option value="Thandalam Campus">Thandalam Campus</option>
+                    </select>
+                </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
                         placeholder="name">
