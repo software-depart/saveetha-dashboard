@@ -3,6 +3,7 @@ import { CampusService } from 'src/app/services/campus/campus.service';
 import { MatDialog } from '@angular/material/dialog'
 import { CampusFormComponent } from './campus-form/campus-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
+import { UserService } from 'src/app/services/user/user.service';
 
 
 @Component({
@@ -15,13 +16,16 @@ export class CampusComponent implements OnInit {
   campuses: any = [];
   isLoading: boolean | undefined;
   location: string = '';
-
-  constructor(private campusService: CampusService, private dialog: MatDialog) {
+  AllCampuses: any = [];
+  constructor(private campusService: CampusService, private dialog: MatDialog, private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
     this.getAllCampuses();
+    this.userService.searchUpdated.subscribe(query => {
+      this.campuses = this.searchCampus(query)
+    })
   }
 
   addCampus() {
@@ -55,6 +59,7 @@ export class CampusComponent implements OnInit {
     this.campusService.getAllCampuses(queryString).subscribe(res => {
       this.isLoading = false;
       this.campuses = res.data;
+      this.AllCampuses = res.data;
     })
   }
   onApprove(campus: any): void {
@@ -129,5 +134,9 @@ export class CampusComponent implements OnInit {
       queryString += `${queryString.length > 0 ? '&' : ''} location=${this.location}`
     }
     return queryString.trim();
+  }
+  
+  searchCampus(query: any) {
+    return this.userService.globalSearch(query.toLowerCase(), this.AllCampuses);
   }
 }

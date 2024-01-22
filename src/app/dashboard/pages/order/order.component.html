@@ -1,5 +1,5 @@
 <div class="d-flex mt-2 px-4">
-  <!-- <button style="margin-left: 25px;" class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse"
+  <button style="margin-left: 25px;" class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse"
     data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
     <i class="fa fa-filter" style="font-size: 12px;" aria-hidden="true"></i>
     Filter
@@ -12,11 +12,36 @@
       <div>
         <mat-form-field class="white-backgrounded-field">
           <mat-label>Choose Location</mat-label>
-          <mat-select [(ngModel)]="category">
-            <mat-option *ngFor="let category of categories" value="{{category._id}}">
-              {{category.name}}
-            </mat-option>
+          <mat-select [(ngModel)]="location" (ngModelChange)="onChangeLocation()">
+            <mat-option value="City Campus">City Campus</mat-option>
+            <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
             <mat-option value="">All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="margin-left: 20px;" *ngIf="location !== null">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Foodcourt</mat-label>
+          <mat-select [(ngModel)]="foodcourt" (ngModelChange)="onChangeFoodcourt()">
+            <mat-option *ngFor="let foodcourt of filteredFoodcourts" value="{{foodcourt._id}}">
+              {{foodcourt.name}}
+            </mat-option>
+            <mat-option *ngIf="filteredFoodcourts.length === 0" [disabled]="true">
+              No Results
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="margin-left: 20px;" *ngIf="location !== null && foodcourt && foodcourt.length >=0">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Restaurant</mat-label>
+          <mat-select [(ngModel)]="restaurant">
+            <mat-option *ngFor="let restaurant of filteredRestaurants" value="{{restaurant._id}}">
+              {{restaurant.name}}
+            </mat-option>
+            <mat-option *ngIf="filteredRestaurants.length === 0" [disabled]="true">
+              No Results
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
@@ -25,41 +50,44 @@
       <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
     </div>
   </div>
-</div> -->
-
-  <div class="container-fluid pt-2 px-4">
-    <div class="bg-light text-center rounded p-4" style="height: 100vh;">
-      <div class="d-flex align-items-center justify-content-between mb-4">
-        <h5 class="mb-0 text-primary">Orders</h5>
-      </div>
-      <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...
-      </button>
-      <div class="table-responsive" *ngIf="!isLoading && orders.length > 0">
-        <table class="table text-start  align-middle table-bordered table-hover mb-0">
-          <thead>
-            <tr class="text-dark">
-              <th scope="col">USER ID</th>
-              <th scope="col">Items</th>
-              <th scope="col">Amount</th>
-              <th scope="col">Type</th>
-              <th scope="col">Created on</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of orders; index as i">
-              <td>{{item.userID[0].userId}}</td>
-              <td>{{item.items}}</td>
-              <td>{{item.amount}}</td>
-              <td>{{item.orderType}}</td>
-              <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="d-flex align-items-center justify-content-center" *ngIf="!isLoading && orders.length === 0">
-        No data found
-      </div>
+</div>
+<div class="container-fluid pt-2 px-4">
+  <div class="bg-light text-center rounded p-4" style="height: 100vh;">
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h5 class="mb-0 text-primary">Orders</h5>
+    </div>
+    <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+    </button>
+    <div class="table-responsive" *ngIf="!isLoading && orders.length > 0">
+      <table class="table text-start  align-middle table-bordered table-hover mb-0">
+        <thead>
+          <tr class="text-dark">
+            <th scope="col">USER ID</th>
+            <th scope="col">Items</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Restaurant</th>
+            <th scope="col">Type</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created on</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of orders; index as i">
+            <td>{{item.userID[0].userId}}</td>
+            <td>{{item.items}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.cartIDs?.itemID[0]?.restaurantId[0]?.name}}</td>
+            <td>{{item.orderType}}</td>
+            <td>{{item.cartIDs.status}}</td>
+            <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex align-items-center justify-content-center" *ngIf="!isLoading && orders.length === 0">
+      No data found
     </div>
   </div>
+</div>

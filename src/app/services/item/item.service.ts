@@ -18,5 +18,13 @@ export class ItemService {
     const url = `${this.itemBaseURL}/${id}`
     return this.apiService.put$(url, data);
   }
+  createItem(data: any): Observable<any> {
+    return this.apiService.post$(this.itemBaseURL, data);
+  }
+
+  deleteItem(id: string): Observable<any> {
+    const url = `${this.itemBaseURL}/${id}`
+    return this.apiService.delete$(url, {});
+  }
 }
 

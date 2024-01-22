@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdersService } from 'src/app/services/order/order.service';
+import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
+import { ResaturantService } from 'src/app/services/restaurant/resaturant.service'
 
 @Component({
   selector: 'app-order',
@@ -11,14 +13,25 @@ export class OrderComponent implements OnInit {
   orders: any;
   isLoading: boolean | undefined;
   category: string = '';
+  location = null;
+  foodcourt: any;
+  filteredFoodcourts: any = []
+  foodcourts: any = [];
+  restaurant: any;
+  filteredRestaurants: any = [];
+  restaurants: any = [];
   constructor(
     private ordersService: OrdersService,
+    private foodcourtService: FoodcourtService,
+    private resaturantService: ResaturantService
   ) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
     this.getAllOrders();
+    this.getAllFoodCourts();
+    this.getAllRestaurants();
   }
 
   getAllOrders() {
@@ -40,14 +53,43 @@ export class OrderComponent implements OnInit {
 
   createFilterQueryString() {
     let queryString = '';
-    if (this.category) {
-      queryString += `${queryString.length > 0 ? '&' : ''} categoryId=${this.category}`
+    if (this.restaurant) {
+      queryString += `${queryString.length > 0 ? '&' : ''} restaurantId=${this.restaurant}`
     }
     return queryString.trim();
   }
   formatItemsText(carts: any) {
     const items = carts.itemID.map((item: { name: any; }) => item.name)
     return items.join();
+  }
+  getAllFoodCourts() {
+    this.foodcourtService.getAllFoodcourts('').subscribe(res => {
+      this.foodcourts = res.data;
+      this.filteredFoodcourts = res.data;
+    })
+  }
+  getAllRestaurants() {
+    this.resaturantService.getAllRestaurants('').subscribe(res => {
+      this.restaurants = res.data;
+      this.filteredRestaurants = res.data;
+    })
+  }
+  onChangeLocation() {
+    this.foodcourt = '';
+    this.restaurant = ''
+    if (this.location === '') {
+      this.filteredFoodcourts = [...this.foodcourts];
+    } else {
+      this.filteredFoodcourts = this.foodcourts.filter((item: any) => item.location && item.location === this.location);
+    }
+  }
+  onChangeFoodcourt() {
+    this.restaurant = '';
+    if (this.foodcourt === '') {
+      this.filteredRestaurants = [...this.restaurants];
+    } else {
+      this.filteredRestaurants = this.restaurants.filter((item: any) => item.foodcourt && item.foodcourt._id === this.foodcourt);
+    }
   }
 }
 

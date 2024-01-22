@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { ItemService } from 'src/app/services/item/item.service';
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
+import { ItemFormComponent } from './item-form/item-form.component'
 
 @Component({
   selector: 'app-item',
@@ -18,7 +19,8 @@ export class ItemComponent implements OnInit {
   restaurant: string = '';
   restaurants: any = [];
   subcategories: any = [];
-
+  location = null
+  filteredRestaurants: any = []
   constructor(
     private subcategoryService: SubcategoryService,
     private dialog: MatDialog,
@@ -50,6 +52,7 @@ export class ItemComponent implements OnInit {
     })
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
+
         this.approveItem(subCategory._id);
       }
     })
@@ -105,8 +108,61 @@ export class ItemComponent implements OnInit {
   getRestaurants() {
     this.resaturantService.getAllRestaurants('').subscribe(res => {
       this.restaurants = res.data;
+      this.filteredRestaurants = res.data;
     })
   }
+  onChangeLocation() {
+    this.restaurant = '';
+    if (this.location === '') {
+      this.filteredRestaurants = [...this.restaurants];
+    } else {
+      this.filteredRestaurants = this.restaurants.filter((item: any) => item.location && item.location === this.location);
+    }
+  }
+  addItem() {
+    const dialogRef = this.dialog.open(ItemFormComponent, {
+      width: '800px',
+      disableClose: true
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.location = null;
+        this.restaurant = '';
+        this.subCategory = '';
+        this.getAllItems();
+      }
+    })
+  }
+  updateItem(item: any): void {
+    const dialogRef = this.dialog.open(ItemFormComponent, {
+      width: '800px',
+      disableClose: true,
+      data: item
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.getAllItems();
+      }
+    })
+  }
+  onDelete(item: any): void {
+    const dialogRef = this.dialog.open(AlertComponent, {
+      width: '500px',
+      disableClose: true,
+      data: { title: 'Delete Item', message: `Are you sure you want to delete ${item.name}?` }
 
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.deleteItem(item._id);
+      }
+    })
+  }
+  deleteItem(id: string): void {
+    this.isLoading = true;
+    this.itemService.deleteItem(id).subscribe(res => {
+      this.getAllItems();
+    })
+  }
 }
 

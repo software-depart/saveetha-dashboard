@@ -18,7 +18,8 @@ export class StudentFormComponent implements OnInit {
     collegeType: '',
     mobileNo: '',
     alternateNo: '',
-    type: ''
+    type: '',
+    collegeName: ''
   }
   types = ['Super Admin', 'Admin', 'Student', 'Restaurant', 'Technician'];
   action: string = 'Create'
@@ -46,7 +47,8 @@ export class StudentFormComponent implements OnInit {
         alternateNo: this.data.alternateNo,
         address: this.data.address,
         collegeType: this.data.collegeType,
-        type: this.data.type
+        type: this.data.type,
+        collegeName: this.data.collegeName
       }
       this.action = 'Update'
       this.title = 'Update User'
@@ -85,7 +87,7 @@ export class StudentFormComponent implements OnInit {
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
         if (obj[key] === '') {
-          if (key !== 'alternateNo' && key !== 'lastName') {
+          if (key !== 'alternateNo' && key !== 'lastName' && key !== 'collegeName') {
             return false;
           }
         }

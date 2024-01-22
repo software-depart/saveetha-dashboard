@@ -7,7 +7,8 @@
         <i class="fa fa-bars"></i>
     </a>
     <form class="d-none d-md-flex " style="width: 40%;">
-        <input class="form-control border-0" type="search" placeholder="Search">
+        <input class="form-control" [(ngModel)]="searchText" [ngModelOptions]="{standalone: true}" type=" search"
+            placeholder="Search" (keyup)="onSearch()">
     </form>
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">

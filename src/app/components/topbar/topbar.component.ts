@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class TopbarComponent implements OnInit {
   userName: string = ''
-
+  searchText: string = ''
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -18,6 +18,10 @@ export class TopbarComponent implements OnInit {
 
   logout(): void {
     this.userService.logout();
+  }
+
+  onSearch() {
+    this.userService.searchUpdated.next(this.searchText)
   }
 
 }

@@ -6,22 +6,21 @@ import { DashboardComponent } from './dashboard.component';
 import { TopbarComponent } from '../components/topbar/topbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
-
-
-
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     TopbarComponent,
     FooterComponent,
-    SidebarComponent,
-    
-    
+    SidebarComponent
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    FormsModule,
+    MatFormFieldModule
   ],
   providers: []
 })

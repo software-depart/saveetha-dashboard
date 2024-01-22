@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { ItemFormComponent } from './item-form/item-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const routes: Routes = [
   {
@@ -14,10 +17,10 @@ const routes: Routes = [
   }
 ];
 
-
 @NgModule({
   declarations: [
-    ItemComponent
+    ItemComponent,
+    ItemFormComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +29,8 @@ const routes: Routes = [
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatDialogModule,
+    MatSlideToggleModule
   ]
 })
 export class ItemModule { }

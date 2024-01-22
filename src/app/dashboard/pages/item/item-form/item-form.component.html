@@ -1,0 +1,75 @@
+<div class="modal-dialog" style="margin: 1.75rem 1.75rem; max-width: 100%;">
+    <div class="modal-content">
+        <div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+                <button type="button" class="btn-close" mat-dialog-close style="cursor: pointer;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                    {{errorMessage}}
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <label>Restaurant</label>
+                        <select class="form-select w-100 my-2" [(ngModel)]="model.restaurantId">
+                            <option selected disabled value="">Select Restaurant</option>
+                            <option *ngFor="let restaurant of restaurants" value="{{restaurant._id}}">
+                                {{restaurant.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <label>Sub Category</label>
+                        <select class="form-select w-100 my-2" [(ngModel)]="model.subcategoryID">
+                            <option selected disabled value="">Select Sub Category</option>
+                            <option *ngFor="let subcategory of subcategories" value="{{subcategory._id}}">
+                                {{subcategory.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
+                            placeholder="name">
+                        <label for="userName">Name</label>
+                    </div>
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <input type="number" class="form-control" autocomplete="off" [(ngModel)]="model.quantity"
+                            placeholder="quantity">
+                        <label for="firstName">Quantity</label>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.unit"
+                            placeholder="unit">
+                        <label for="firstName">Unit</label>
+                    </div>
+                    <div class="form-floating mb-3" style="width: 49%">
+                        <input type="number" class="form-control" autocomplete="off" [(ngModel)]="model.amount"
+                            placeholder="amount">
+                        <label for="firstName">Amount</label>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="d-flex justify-content-between mx-3 mt-4" style="width: 49%">
+                        <label>Active</label>
+                        <mat-slide-toggle [(ngModel)]="model.isApproved" color="primary"></mat-slide-toggle>
+                    </div>
+                    <div class="d-flex justify-content-between mx-3 mt-4" style="width: 49%">
+                        <label>Active</label>
+                        <mat-slide-toggle [(ngModel)]="model.isActive" color="primary"></mat-slide-toggle>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" mat-dialog-close>Close</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()">{{action}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,25 +27,31 @@
                             placeholder="food type">
                         <label for="firstName">Last Name</label>
                     </div>
+                    <div class="form-floating" style="width: 49%;">
+                        <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.collegeName"
+                            placeholder="food type">
+                        <label for="firstName">College Name/Department</label>
+                    </div>
+
+                </div>
+                <div style="display: flex; justify-content: space-between;">
                     <div class="form-floating mb-3" style="width: 49%;">
                         <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.mobileNo"
                             placeholder="food type">
                         <label for="firstName">Mobile No.</label>
                     </div>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
                     <div class="form-floating mb-3" style="width: 49%;">
                         <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.alternateNo"
                             placeholder="food type">
                         <label for="firstName">Alternate Mobile No.</label>
                     </div>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
                     <div class="form-floating mb-3" style="width: 49%;">
                         <textarea class="form-control" placeholder="Address" id="floatingTextarea2"
                             [(ngModel)]="model.address" style=" height: 100px"></textarea>
                         <label for="firstName">Address</label>
                     </div>
-                </div>
-                <div style="display: flex; justify-content: space-between;">
                     <div class="mb-3" style="width: 49%;">
                         <label>Location</label>
                         <select class="form-select w-100 my-2" [(ngModel)]="model.location">
@@ -54,6 +60,8 @@
                             <option value="Thandalam Campus">Thandalam Campus</option>
                         </select>
                     </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="mb-3" style="width: 49%;">
                         <label>College Type</label>
                         <select class="form-select w-100 my-2" [(ngModel)]="model.collegeType">
@@ -65,8 +73,6 @@
                             <option value="Engineering">Engineering</option>
                         </select>
                     </div>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="mb-3" style="width: 49%;">
                         <label>User Type</label>
                         <select class="form-select w-100 my-2" [(ngModel)]="model.type">
@@ -74,6 +80,9 @@
                             <option value="{{item}}" *ngFor="let item of types">{{item}}</option>
                         </select>
                     </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div class="d-flex justify-content-between mx-3 mt-4" style="width: 49%">
                         <label>Active</label>
                         <mat-slide-toggle [(ngModel)]="model.isActive" color="primary"></mat-slide-toggle>

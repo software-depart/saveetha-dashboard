@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { ApiService } from '../common/api.service'
 
 @Injectable({
@@ -9,9 +9,10 @@ import { ApiService } from '../common/api.service'
 })
 
 export class UserService {
-  signinURL = '/auth/login'
-  usersBaseURL = '/user'
-
+  signinURL = '/auth/login';
+  usersBaseURL = '/user';
+  searchText: string = '';
+  searchUpdated = new BehaviorSubject('');
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -61,5 +62,19 @@ export class UserService {
   isSuperAdmin() {
     const user = this.getUser();
     return user.type === 'Super Admin';
+  }
+  globalSearch(query: string, data: any) {
+    const results = [];
+    for (const item of data) {
+      for (const key in item) {
+        if (Object.prototype.hasOwnProperty.call(item, key)) {
+          const value = typeof item[key] === 'string' ? item[key].toLowerCase() : item[key];
+          if (String(value).includes(query)) {
+            results.push(item);
+          }
+        }
+      }
+    }
+    return results;
   }
 }
