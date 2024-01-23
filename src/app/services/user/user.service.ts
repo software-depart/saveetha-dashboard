@@ -13,6 +13,7 @@ export class UserService {
   usersBaseURL = '/user';
   searchText: string = '';
   searchUpdated = new BehaviorSubject('');
+  resetSearch = new BehaviorSubject('');
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -63,18 +64,14 @@ export class UserService {
     const user = this.getUser();
     return user.type === 'Super Admin';
   }
-  globalSearch(query: string, data: any) {
-    const results = [];
-    for (const item of data) {
-      for (const key in item) {
-        if (Object.prototype.hasOwnProperty.call(item, key)) {
-          const value = typeof item[key] === 'string' ? item[key].toLowerCase() : item[key];
-          if (String(value).includes(query)) {
-            results.push(item);
-          }
-        }
-      }
-    }
+  globalSearch(query: any, data: any, searchableFields: any) {
+    query = query.toLowerCase();
+    const results = data.filter((item: any) => {
+      return searchableFields.some((field: any) => {
+        const value = field.split('.').reduce((obj: any, key: any) => obj && obj[key], item);
+        return value && value.toString().toLowerCase().includes(query);
+      });
+    });
     return results;
   }
 }

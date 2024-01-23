@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrdersService } from 'src/app/services/order/order.service';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service'
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-order',
@@ -20,15 +21,25 @@ export class OrderComponent implements OnInit {
   restaurant: any;
   filteredRestaurants: any = [];
   restaurants: any = [];
+  allOrders: any = [];
   constructor(
     private ordersService: OrdersService,
     private foodcourtService: FoodcourtService,
-    private resaturantService: ResaturantService
+    private resaturantService: ResaturantService,
+    private userService: UserService
   ) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allOrders.length > 0) {
+        this.orders = this.userService.globalSearch(query.toLowerCase(), this.allOrders,
+          ['userID[0].userId', 'items', 'amount', 'cartIDs?.itemID[0]?.restaurantId[0]?.name',
+            'cartIDs?.itemID[0]?.restaurantId[0]?.location', 'orderType', 'cartIDs.status']);
+      }
+    })
     this.getAllOrders();
     this.getAllFoodCourts();
     this.getAllRestaurants();
@@ -44,6 +55,7 @@ export class OrderComponent implements OnInit {
         item.items = this.formatItemsText(item.cartIDs)
       });
       this.orders = res.data;
+      this.allOrders = res.data;
     })
   }
 

@@ -5,6 +5,7 @@ import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { ItemService } from 'src/app/services/item/item.service';
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
 import { ItemFormComponent } from './item-form/item-form.component'
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-item',
@@ -21,15 +22,24 @@ export class ItemComponent implements OnInit {
   subcategories: any = [];
   location = null
   filteredRestaurants: any = []
+  allItems: any = [];
   constructor(
     private subcategoryService: SubcategoryService,
     private dialog: MatDialog,
     private itemService: ItemService,
-    private resaturantService: ResaturantService) {
+    private resaturantService: ResaturantService,
+    private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allItems.length > 0) {
+        this.items = this.userService.globalSearch(query.toLowerCase(), this.allItems,
+          ['name', 'quantity', 'unit', 'amount', 'restaurantId?.name', 'subcategoryID?.name', 'createdBy.firstName', 'updatedBy.firstName']);
+      }
+    })
     this.getRestaurants();
     this.getSubcategories();
     this.getAllItems();
@@ -41,6 +51,7 @@ export class ItemComponent implements OnInit {
     this.itemService.getAllItems(queryString).subscribe(res => {
       this.isLoading = false;
       this.items = res.data;
+      this.allItems = res.data;
     })
   }
   onApprove(subCategory: any): void {

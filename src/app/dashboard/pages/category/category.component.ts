@@ -3,7 +3,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { MatDialog } from '@angular/material/dialog'
 import { CategoryFormComponent } from './category-form/category-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
-
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-category',
@@ -15,12 +15,19 @@ export class CategoryComponent implements OnInit {
   categories: any;
   isLoading: boolean | undefined;
   location: string = '';
-
-  constructor(private categoryService: CategoryService, private dialog: MatDialog) {
+  allCategories: any = []
+  constructor(private categoryService: CategoryService, private dialog: MatDialog,
+    private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allCategories.length > 0) {
+        this.categories = this.userService.globalSearch(query.toLowerCase(), this.allCategories, ['name', 'createdBy.firstName', 'updatedBy.firstName']);
+      }
+    })
     this.getAllCategories();
   }
 
@@ -55,6 +62,7 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getAllCategories(queryString).subscribe(res => {
       this.isLoading = false;
       this.categories = res.data;
+      this.allCategories = res.data;
     })
   }
   onApprove(resaturant: any): void {

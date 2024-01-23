@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { RestaurentFormComponent } from './restaurent-form/restaurent-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-restaurent',
@@ -18,11 +19,22 @@ export class RestaurentComponent implements OnInit {
   isLoading: boolean | undefined;
   location = null
   foodcourt: string = '';
-  constructor(private resaturantService: ResaturantService, private dialog: MatDialog, private foodcourtService: FoodcourtService) {
+  allRestaurants: any = [];
+  constructor(
+    private resaturantService: ResaturantService,
+    private dialog: MatDialog,
+    private foodcourtService: FoodcourtService,
+    private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allRestaurants.length > 0) {
+        this.restaurants = this.userService.globalSearch(query.toLowerCase(), this.allRestaurants, ['name', 'foodcourt.name', 'location', 'food_type', 'address']);
+      }
+    })
     this.getAllRestaurants();
     this.getAllFoodcourts();
   }
@@ -59,6 +71,7 @@ export class RestaurentComponent implements OnInit {
     this.resaturantService.getAllRestaurants(queryString).subscribe(res => {
       this.isLoading = false;
       this.restaurants = res.data;
+      this.allRestaurants = res.data;
     })
   }
   onApprove(resaturant: any): void {

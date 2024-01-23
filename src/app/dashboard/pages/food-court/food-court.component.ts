@@ -3,7 +3,7 @@ import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service';
 import { MatDialog } from '@angular/material/dialog'
 import { FoodFormComponent } from './food-form/food-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
-
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-food-court',
@@ -15,12 +15,18 @@ export class FoodCourtComponent implements OnInit {
   foodcourts: any;
   isLoading: boolean | undefined;
   location: string = '';
-
-  constructor(private foodcourtService: FoodcourtService, private dialog: MatDialog) {
+  allFoodcourts: any;
+  constructor(private foodcourtService: FoodcourtService, private dialog: MatDialog, private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allFoodcourts.length > 0) {
+        this.foodcourts = this.userService.globalSearch(query.toLowerCase(), this.allFoodcourts, ['name', 'restaurantsCount', 'location', 'createdBy.firstName']);
+      }
+    })
     this.getAllFoodcourts();
   }
 
@@ -55,6 +61,7 @@ export class FoodCourtComponent implements OnInit {
     this.foodcourtService.getAllFoodcourts(queryString).subscribe(res => {
       this.isLoading = false;
       this.foodcourts = res.data;
+      this.allFoodcourts = res.data
     })
   }
   onApprove(resaturant: any): void {

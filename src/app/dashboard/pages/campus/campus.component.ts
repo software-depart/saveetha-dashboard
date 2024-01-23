@@ -16,15 +16,18 @@ export class CampusComponent implements OnInit {
   campuses: any = [];
   isLoading: boolean | undefined;
   location: string = '';
-  AllCampuses: any = [];
+  allCampuses: any = [];
   constructor(private campusService: CampusService, private dialog: MatDialog, private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
     this.getAllCampuses();
     this.userService.searchUpdated.subscribe(query => {
-      this.campuses = this.searchCampus(query)
+      if (this.allCampuses.length > 0) {
+        this.campuses = this.userService.globalSearch(query.toLowerCase(), this.allCampuses, ['name', 'createdBy.firstName']);
+      }
     })
   }
 
@@ -59,7 +62,7 @@ export class CampusComponent implements OnInit {
     this.campusService.getAllCampuses(queryString).subscribe(res => {
       this.isLoading = false;
       this.campuses = res.data;
-      this.AllCampuses = res.data;
+      this.allCampuses = res.data;
     })
   }
   onApprove(campus: any): void {
@@ -134,9 +137,5 @@ export class CampusComponent implements OnInit {
       queryString += `${queryString.length > 0 ? '&' : ''} location=${this.location}`
     }
     return queryString.trim();
-  }
-  
-  searchCampus(query: any) {
-    return this.userService.globalSearch(query.toLowerCase(), this.AllCampuses);
   }
 }

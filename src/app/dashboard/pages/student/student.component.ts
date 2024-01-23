@@ -15,12 +15,19 @@ export class StudentComponent implements OnInit {
   users: any;
   isLoading: boolean | undefined;
   location: string = '';
-
+  allUsers: any = []
   constructor(public userService: UserService, private dialog: MatDialog) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allUsers.length > 0) {
+        this.users = this.userService.globalSearch(query.toLowerCase(), this.allUsers,
+          ['userId', 'firstName', 'type', 'mobileNo', 'collegeType', 'collegeName', 'location', 'address']);
+      }
+    })
     this.getAllUsers();
   }
 
@@ -56,6 +63,7 @@ export class StudentComponent implements OnInit {
     this.userService.getAllUsers(queryString).subscribe(res => {
       this.isLoading = false;
       this.users = res.data;
+      this.allUsers = res.data;
     })
   }
 

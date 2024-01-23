@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { SubCategoryFormComponent } from './sub-category-form/sub-category-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { CategoryService } from 'src/app/services/category/category.service';
+import { UserService } from 'src/app/services/user/user.service'
 
 @Component({
   selector: 'app-sub-category',
@@ -16,14 +17,23 @@ export class SubCategoryComponent implements OnInit {
   isLoading: boolean | undefined;
   category: string = '';
   categories: any = [];
+  allSubCategories: any;
   constructor(
     private subcategoryService: SubcategoryService,
     private dialog: MatDialog,
-    private categoryService: CategoryService) {
+    private categoryService: CategoryService,
+    private userService: UserService) {
     this.isLoading = true
   }
 
   ngOnInit(): void {
+    this.userService.resetSearch.next('')
+    this.userService.searchUpdated.subscribe(query => {
+      if (this.allSubCategories.length > 0) {
+        this.subCategories = this.userService.globalSearch(query.toLowerCase(), this.allSubCategories,
+          ['name', 'categoryId.name', 'createdBy.firstName']);
+      }
+    })
     this.getcategories();
     this.getAllSubCategories();
   }
@@ -60,6 +70,7 @@ export class SubCategoryComponent implements OnInit {
     this.subcategoryService.getAllSubCategories(queryString).subscribe(res => {
       this.isLoading = false;
       this.subCategories = res.data;
+      this.allSubCategories = res.data;
     })
   }
   onApprove(subCategory: any): void {

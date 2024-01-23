@@ -12,6 +12,9 @@ export class TopbarComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.resetSearch.subscribe(res => {
+      this.searchText = ''
+    })
     const user = this.userService.getUser();
     this.userName = user.firstName;
   }
