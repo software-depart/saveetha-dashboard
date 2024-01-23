@@ -3,7 +3,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { MatDialog } from '@angular/material/dialog'
 import { StudentFormComponent } from './student-form/student-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
-
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-student',
@@ -15,8 +15,12 @@ export class StudentComponent implements OnInit {
   users: any;
   isLoading: boolean | undefined;
   location: string = '';
-  allUsers: any = []
-  constructor(public userService: UserService, private dialog: MatDialog) {
+  allUsers: any = [];
+  campuses: any = [];
+  constructor(
+    public userService: UserService,
+    private dialog: MatDialog,
+    private campusService: CampusService) {
     this.isLoading = true
   }
 
@@ -29,6 +33,13 @@ export class StudentComponent implements OnInit {
       }
     })
     this.getAllUsers();
+    this.getAllCampuses();
+  }
+
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
   }
 
   addUser() {

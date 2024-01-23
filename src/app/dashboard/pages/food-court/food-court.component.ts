@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { FoodFormComponent } from './food-form/food-form.component';
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { UserService } from 'src/app/services/user/user.service'
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-food-court',
@@ -16,7 +17,12 @@ export class FoodCourtComponent implements OnInit {
   isLoading: boolean | undefined;
   location: string = '';
   allFoodcourts: any;
-  constructor(private foodcourtService: FoodcourtService, private dialog: MatDialog, private userService: UserService) {
+  campuses: any = []
+  constructor(
+    private foodcourtService: FoodcourtService,
+    private dialog: MatDialog,
+    private userService: UserService,
+    private campusService: CampusService) {
     this.isLoading = true
   }
 
@@ -28,6 +34,13 @@ export class FoodCourtComponent implements OnInit {
       }
     })
     this.getAllFoodcourts();
+    this.getAllCampuses();
+  }
+
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
   }
 
   addFoodCourt() {

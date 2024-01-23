@@ -9,6 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 export class AlertComponent implements OnInit {
   title: string = ''
   message: string = ''
+  warning: boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<AlertComponent>,
@@ -18,6 +19,7 @@ export class AlertComponent implements OnInit {
     if (this.data) {
       this.title = this.data.title;
       this.message = this.data.message;
+      this.warning = this.data.warning || false;
     }
   }
 

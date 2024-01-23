@@ -3,6 +3,7 @@ import { OrdersService } from 'src/app/services/order/order.service';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service'
 import { UserService } from 'src/app/services/user/user.service'
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-order',
@@ -22,11 +23,13 @@ export class OrderComponent implements OnInit {
   filteredRestaurants: any = [];
   restaurants: any = [];
   allOrders: any = [];
+  campuses: any = [];
   constructor(
     private ordersService: OrdersService,
     private foodcourtService: FoodcourtService,
     private resaturantService: ResaturantService,
-    private userService: UserService
+    private userService: UserService,
+    private campusService: CampusService
   ) {
     this.isLoading = true
   }
@@ -43,6 +46,7 @@ export class OrderComponent implements OnInit {
     this.getAllOrders();
     this.getAllFoodCourts();
     this.getAllRestaurants();
+    this.getAllCampuses();
   }
 
   getAllOrders() {
@@ -102,6 +106,11 @@ export class OrderComponent implements OnInit {
     } else {
       this.filteredRestaurants = this.restaurants.filter((item: any) => item.foodcourt && item.foodcourt._id === this.foodcourt);
     }
+  }
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
   }
 }
 

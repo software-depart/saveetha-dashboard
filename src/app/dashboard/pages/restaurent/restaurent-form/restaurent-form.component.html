@@ -11,18 +11,21 @@
                 </div>
                 <div class="mb-3">
                     <label>Location</label>
-                    <select class="form-select w-100 my-2" [(ngModel)]="model.location">
+                    <select class="form-select w-100 my-2" [(ngModel)]="model.location"
+                        (ngModelChange)="onChangeLocation()">
                         <option selected disabled value="">Select location</option>
-                        <option value="City Campus">City Campus</option>
-                        <option value="Thandalam Campus">Thandalam Campus</option>
+                        <option value="{{item.name}}" *ngFor="let item of campuses">{{item.name}}</option>
                     </select>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" *ngIf="model.location">
                     <label>Food court</label>
                     <select class="form-select w-100 my-2" [(ngModel)]="model.foodcourt">
                         <option selected disabled value="">Select Food court</option>
-                        <option *ngFor="let foodcourt of foodcourts" value="{{foodcourt._id}}">
+                        <option *ngFor="let foodcourt of filteredFoodcourts" value="{{foodcourt._id}}">
                             {{foodcourt.name}}
+                        </option>
+                        <option *ngIf="filteredFoodcourts.length === 0" [disabled]="true">
+                            No Results
                         </option>
                     </select>
                 </div>

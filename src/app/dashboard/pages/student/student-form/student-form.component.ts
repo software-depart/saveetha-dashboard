@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { UserService } from 'src/app/services/user/user.service';
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-student-form',
@@ -26,12 +27,15 @@ export class StudentFormComponent implements OnInit {
   title: string = 'Create User'
   mode: string = 'create'
   errorMessage: string = '';
+  campuses: any = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<StudentFormComponent>,
-    private userService: UserService) { }
+    private userService: UserService,
+    private campusService: CampusService) { }
 
   ngOnInit(): void {
+    this.getAllCampuses();
     if (this.userService.isAdmin()) {
       this.types = ['Student', 'Restaurant', 'Technician']
     }
@@ -100,5 +104,10 @@ export class StudentFormComponent implements OnInit {
   }
   validMobileNo(mobile: string) {
     return /^\d{10}$/.test(mobile)
+  }
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
   }
 }

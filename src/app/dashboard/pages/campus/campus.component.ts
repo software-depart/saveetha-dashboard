@@ -108,17 +108,31 @@ export class CampusComponent implements OnInit {
   }
 
   onDelete(campus: any): void {
-    const dialogRef = this.dialog.open(AlertComponent, {
-      width: '500px',
-      disableClose: true,
-      data: { title: 'Delete Campus', message: `Are you sure you want to delete ${campus.name}?` }
+    if (campus.isApproved) {
+      const dialogRef = this.dialog.open(AlertComponent, {
+        width: '500px',
+        disableClose: true,
+        data: { title: 'Delete Campus', message: `Cannot delete ${campus.name}. As Campus is already approved.`, warning: true }
 
-    })
-    dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.deleteCampus(campus._id);
-      }
-    })
+      })
+      dialogRef.afterClosed().subscribe(res => {
+        if (res) {
+          return;
+        }
+      })
+    } else {
+      const dialogRef = this.dialog.open(AlertComponent, {
+        width: '500px',
+        disableClose: true,
+        data: { title: 'Delete Campus', message: `Are you sure you want to delete ${campus.name}?` }
+
+      })
+      dialogRef.afterClosed().subscribe(res => {
+        if (res) {
+          this.deleteCampus(campus._id);
+        }
+      })
+    }
   }
   deleteCampus(id: string): void {
     this.isLoading = true;

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service';
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-restaurent-form',
@@ -23,13 +24,16 @@ export class RestaurentFormComponent implements OnInit {
   title: string = 'Create Restaurant'
   mode: string = 'create'
   errorMessage: string = '';
+  campuses: any = [];
+  filteredFoodcourts: any = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<RestaurentFormComponent>,
-    private resaturantService: ResaturantService, private foodcourtService: FoodcourtService) { }
+    private resaturantService: ResaturantService,
+    private foodcourtService: FoodcourtService,
+    private campusService: CampusService) { }
 
   ngOnInit(): void {
-    this.getAllFoodcourts()
     if (this.data) {
       this.mode = 'update';
       this.model = {
@@ -44,6 +48,8 @@ export class RestaurentFormComponent implements OnInit {
       this.action = 'Update'
       this.title = 'Update Restaurant'
     }
+    this.getAllFoodcourts()
+    this.getAllCampuses();
   }
 
   onSubmit() {
@@ -82,7 +88,25 @@ export class RestaurentFormComponent implements OnInit {
   getAllFoodcourts() {
     this.foodcourtService.getAllFoodcourts('').subscribe(res => {
       this.foodcourts = res.data;
+      this.filteredFoodcourts = res.data
+      if (this.mode === 'update') {
+        this.onChangeLocation();
+        this.model.foodcourt = this.data.foodcourt._id
+      }
     })
   }
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
+  }
+  onChangeLocation() {
+    this.model.foodcourt = '';
+    if (this.model.location === '') {
+      this.filteredFoodcourts = [...this.foodcourts];
+    } else {
+      this.filteredFoodcourts = this.foodcourts.filter((item: any) => item.location && item.location === this.model.location);
+    }
 
+  }
 }

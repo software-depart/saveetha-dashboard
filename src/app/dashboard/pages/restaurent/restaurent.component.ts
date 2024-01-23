@@ -5,6 +5,7 @@ import { RestaurentFormComponent } from './restaurent-form/restaurent-form.compo
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
 import { UserService } from 'src/app/services/user/user.service'
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-restaurent',
@@ -20,11 +21,13 @@ export class RestaurentComponent implements OnInit {
   location = null
   foodcourt: string = '';
   allRestaurants: any = [];
+  campuses: any = [];
   constructor(
     private resaturantService: ResaturantService,
     private dialog: MatDialog,
     private foodcourtService: FoodcourtService,
-    private userService: UserService) {
+    private userService: UserService,
+    private campusService: CampusService) {
     this.isLoading = true
   }
 
@@ -37,6 +40,7 @@ export class RestaurentComponent implements OnInit {
     })
     this.getAllRestaurants();
     this.getAllFoodcourts();
+    this.getAllCampuses();
   }
 
   addRestaurant() {
@@ -163,6 +167,11 @@ export class RestaurentComponent implements OnInit {
     } else {
       this.filteredFoodcourts = this.foodcourts.filter((item: any) => item.location && item.location === this.location);
     }
+  }
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
   }
 }
 

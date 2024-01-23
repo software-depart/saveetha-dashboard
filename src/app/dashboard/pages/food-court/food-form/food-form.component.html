@@ -13,8 +13,7 @@
                     <label>Location</label>
                     <select class="form-select w-100 my-2" [(ngModel)]="model.location">
                         <option selected disabled value="">Select location</option>
-                        <option value="City Campus">City Campus</option>
-                        <option value="Thandalam Campus">Thandalam Campus</option>
+                        <option value="{{item.name}}" *ngFor="let item of campuses">{{item.name}}</option>
                     </select>
                 </div>
                 <div class="form-floating mb-3">
@@ -23,8 +22,8 @@
                     <label for="userName">Name</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.restaurantsCount"
-                        placeholder=">Restaurants Count">
+                    <input type="number" (keypress)="validFoodcourt($event)" class="form-control" autocomplete="off"
+                        [(ngModel)]="model.restaurantsCount" placeholder=">Restaurants Count">
                     <label for="userName">Restaurants Count</label>
                 </div>
                 <div class="d-flex justify-content-between mx-3">

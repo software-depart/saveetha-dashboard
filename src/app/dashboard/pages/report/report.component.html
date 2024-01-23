@@ -71,7 +71,7 @@ Filter
 
     </div>
 
-    <div class="d-flex justify-content-between mt-4 align-items-center">
+    <div class="d-flex mt-4 align-items-center">
       <div>
         <mat-form-field class="white-backgrounded-field">
           <mat-label>Report Type</mat-label>
@@ -79,16 +79,39 @@ Filter
             <mat-option value="restaurant">Restaurant</mat-option>
             <mat-option value="location">Location</mat-option>
             <mat-option value="item">Item</mat-option>
-            <mat-option value="individual" disabled="true">Individual</mat-option>
-            <mat-option value="weekly" disabled="true">Weekly</mat-option>
-            <mat-option value="monthly" disabled="true">Monthly</mat-option>
+            <mat-option value="individual">Individual</mat-option>
+            <mat-option value="weekly">Weekly</mat-option>
+            <mat-option value="monthly">Monthly</mat-option>
             <mat-option value="location Feedback" disabled="true">Location Feedback</mat-option>
             <mat-option value="restaurant Feedback" disabled="true">Restaurant Feedback</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-
-      <div class="d-flex justify-content-between gap-2 text-center">
+      <div style="margin-left: 20px" *ngIf="report.type !== 'location' && report.type !== 'item'">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Location</mat-label>
+          <mat-select [(ngModel)]="report.location">
+            <mat-option value="City Campus">City Campus</mat-option>
+            <mat-option value="Thandalam Campus">Thandalam Campus</mat-option>
+            <mat-option value="">All</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div style="margin-left: 20px;" *ngIf="report.type === 'individual'">
+        <mat-form-field class="white-backgrounded-field">
+          <mat-label>Choose Item</mat-label>
+          <mat-select [(ngModel)]="report.itemName">
+            <mat-option *ngFor="let item of items" value="{{item.name}}">
+              {{item.name}}
+            </mat-option>
+            <mat-option *ngIf="items.length === 0" [disabled]="true">
+              No Results
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="report.type !== 'weekly' && report.type !== 'monthly'" style="margin-left: 20px;"
+        class="d-flex justify-content-between gap-2 text-center">
         <p>From</p>
         <div>
           <input type="text" mwlFlatpickr [(ngModel)]="report.start" [altInput]="true" [convertModelValue]="true" />
@@ -96,21 +119,128 @@ Filter
 
       </div>
 
-      <div class="d-flex justify-content-between gap-2 text-center">
+      <div *ngIf="report.type !== 'weekly' && report.type !== 'monthly'" style="margin-left: 20px;"
+        class="d-flex justify-content-between gap-2 text-center">
         <p>To</p>
         <div>
           <input type="text" mwlFlatpickr [(ngModel)]="report.end" [altInput]="true" [convertModelValue]="true" />
         </div>
       </div>
-      <div><button type="button" class="btn btn-primary" (click)="downloadReport()" [disabled]="!report.type">Download
-          report</button></div>
+
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div><button type="button" class="btn btn-primary" (click)="getReport()"
+          [disabled]="!report.type || report.type && report.type === 'individual' && !report.itemName">Search</button>
+      </div>
+      <div style="margin-left: 15px;"><button type="button" class="btn btn-primary" (click)="downloadReport()"
+          [disabled]="!report.type || report.type && report.type === 'individual' && !report.itemName">Download
+          report</button>
+      </div>
     </div>
   </div>
-</div>
-
-
-<!-- <div class="d-flex px-4" *ngIf="(selectReport == 'Restaurant Feedback') || (selectReport == 'Location Feedback')">
-  <canvas baseChart class="chart" [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
-    [type]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)" height="100px">
-  </canvas>
-</div> -->
+  <div class="container-fluid pt-2 px-4">
+    <div class="bg-light text-center rounded p-4" style="height: 100vh;">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="mb-0 text-primary">Reports - {{report.type }}</h5>
+      </div>
+      <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Loading...
+      </button>
+      <div class="table-responsive" *ngIf="!isLoading && reports.length > 0">
+        <table class="table text-start  align-middle table-bordered table-hover mb-0">
+          <thead *ngIf="reportName === 'items'">
+            <tr class="text-dark">
+              <th scope="col">Item</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Restaurant</th>
+              <th scope="col">Location</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="reportName === 'items'">
+            <tr *ngFor="let item of reports; index as i">
+              <td>{{item.cart.item[0].name}}</td>
+              <td>{{item.totalAmount}}</td>
+              <td>{{item.cart.restaurant[0].name}}</td>
+              <td>{{item.cart.restaurant[0].location}}</td>
+            </tr>
+          </tbody>
+          <thead *ngIf="reportName === 'restaurant'">
+            <tr class="text-dark">
+              <th scope="col">Name</th>
+              <th scope="col">Location</th>
+              <th scope="col">Food court</th>
+              <th scope="col">Food type</th>
+              <th scope="col">Created on</th>
+              <th scope="col">Address</th>
+              <th scope="col">Approved</th>
+              <th scope="col">Active</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="reportName === 'restaurant'">
+            <tr *ngFor="let item of reports; index as i">
+              <td>{{item.name}}</td>
+              <td>{{item.location}}</td>
+              <td>{{item.foodcourt?.name}}</td>
+              <td>{{item.food_type}}</td>
+              <td>{{item.address}}</td>
+              <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
+              <td>{{item['isApproved'] ? 'Yes' : 'No' }}</td>
+              <td>{{item['isActive'] ? 'Yes' : 'No'}}</td>
+            </tr>
+          </tbody>
+          <thead *ngIf="reportName === 'location'">
+            <tr class="text-dark">
+              <th scope="col">Name</th>
+              <th scope="col">Created by</th>
+              <th scope="col">Updated by</th>
+              <th scope="col">Created on</th>
+              <th scope="col">Approved</th>
+              <th scope="col">Active</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="reportName === 'location'">
+            <tr *ngFor="let item of reports; index as i">
+              <td>{{item.name}}</td>
+              <td>{{item['createdBy']?.firstName}}</td>
+              <td>{{item['updatedBy']?.firstName }}</td>
+              <td>{{item.created_at | date: 'dd/MM/yyyy h:mm:ss a'}}</td>
+              <td>{{item['isApproved'] ? 'Yes' : 'No' }}</td>
+              <td>{{item['isActive'] ? 'Yes' : 'No'}}</td>
+            </tr>
+          </tbody>
+          <thead *ngIf="reportName === 'item'">
+            <tr class="text-dark">
+              <th scope="col">Name</th>
+              <th scope="col">Qty.</th>
+              <th scope="col">Unit</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Restaurent</th>
+              <th scope="col">Sub Category</th>
+              <th scope="col">Created by</th>
+              <th scope="col">Updated by</th>
+              <th scope="col">Approve</th>
+              <th scope="col">Active</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="reportName === 'item'">
+            <tr *ngFor="let item of reports; index as i">
+              <td>{{item.name}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.unit}}</td>
+              <td>{{item.amount}}</td>
+              <td>{{item.restaurantId?.name}}</td>
+              <td>{{item.subcategoryID?.name}}</td>
+              <td>{{item.createdBy?.firstName}}</td>
+              <td>{{item.updatedBy?.firstName}}</td>
+              <td>{{item['isApproved'] ? 'Yes' : 'No' }}</td>
+              <td>{{item['isActive'] ? 'Yes' : 'No'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex align-items-center justify-content-center" *ngIf="!isLoading && reports.length === 0">
+        No data found
+      </div>
+    </div>
+  </div>

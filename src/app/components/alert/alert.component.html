@@ -8,8 +8,8 @@
             {{message}}
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" mat-dialog-close>No</button>
-            <button type="button" class="btn btn-primary" (click)="doOk(true)">Yes</button>
+            <button type="button" class="btn btn-secondary" mat-dialog-close *ngIf="!warning">No</button>
+            <button type="button" class="btn btn-primary" (click)="doOk(true)">{{warning? 'Close': 'Yes'}}</button>
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service';
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-food-form',
@@ -20,12 +21,15 @@ export class FoodFormComponent implements OnInit {
   title: string = 'Create Food court'
   mode: string = 'create'
   errorMessage: string = '';
+  campuses: any = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<FoodFormComponent>,
-    private foodcourtService: FoodcourtService) { }
+    private foodcourtService: FoodcourtService,
+    private campusService: CampusService) { }
 
   ngOnInit(): void {
+    this.getAllCampuses();
     if (this.data) {
       this.mode = 'update';
       this.model = {
@@ -72,5 +76,17 @@ export class FoodFormComponent implements OnInit {
   closeModal(reload: boolean): void {
     this.dialogRef.close(reload);
   }
-
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
+    })
+  }
+  validFoodcourt(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    const inputValue = event.target.value + String.fromCharCode(charCode);
+    if (!/^\d+$/.test(inputValue) || Number(inputValue) < 1 || Number(inputValue) > 99) {
+      return false;
+    }
+    return true;
+  }
 }

@@ -6,6 +6,7 @@ import { ItemService } from 'src/app/services/item/item.service';
 import { ResaturantService } from 'src/app/services/restaurant/resaturant.service';
 import { ItemFormComponent } from './item-form/item-form.component'
 import { UserService } from 'src/app/services/user/user.service'
+import { CampusService } from 'src/app/services/campus/campus.service'
 
 @Component({
   selector: 'app-item',
@@ -23,12 +24,14 @@ export class ItemComponent implements OnInit {
   location = null
   filteredRestaurants: any = []
   allItems: any = [];
+  campuses: any = [];
   constructor(
     private subcategoryService: SubcategoryService,
     private dialog: MatDialog,
     private itemService: ItemService,
     private resaturantService: ResaturantService,
-    private userService: UserService) {
+    private userService: UserService,
+    private campusService: CampusService) {
     this.isLoading = true
   }
 
@@ -43,6 +46,7 @@ export class ItemComponent implements OnInit {
     this.getRestaurants();
     this.getSubcategories();
     this.getAllItems();
+    this.getAllCampuses();
   }
 
   getAllItems() {
@@ -173,6 +177,11 @@ export class ItemComponent implements OnInit {
     this.isLoading = true;
     this.itemService.deleteItem(id).subscribe(res => {
       this.getAllItems();
+    })
+  }
+  getAllCampuses() {
+    this.campusService.getAllCampuses('').subscribe(res => {
+      this.campuses = res.data;
     })
   }
 }

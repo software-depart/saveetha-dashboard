@@ -56,8 +56,7 @@
                         <label>Location</label>
                         <select class="form-select w-100 my-2" [(ngModel)]="model.location">
                             <option selected disabled value="">Select location</option>
-                            <option value="City Campus">City Campus</option>
-                            <option value="Thandalam Campus">Thandalam Campus</option>
+                            <option value="{{item.name}}" *ngFor="let item of campuses">{{item.name}}</option>
                         </select>
                     </div>
                 </div>
