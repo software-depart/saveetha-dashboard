@@ -89,4 +89,12 @@ export class FoodFormComponent implements OnInit {
     }
     return true;
   }
+  validName(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    const inputValue = event.target.value + String.fromCharCode(charCode);
+    if (!/^[a-zA-Z\s]+$/.test(inputValue)) {
+      return false;
+    }
+    return true;
+  }
 }

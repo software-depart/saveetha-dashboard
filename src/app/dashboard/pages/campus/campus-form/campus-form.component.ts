@@ -41,10 +41,6 @@ export class CampusFormComponent implements OnInit {
       this.errorMessage = 'Please fill in all the fields.'
       return;
     }
-    if (!/^[a-zA-Z0-9_]+$/.test(this.model.name)) {
-      this.errorMessage = 'Campus name should not allow special characters.'
-      return;
-    }
     if (this.mode === 'create') {
       this.campusService.createCampus(this.model).subscribe(res => {
         this.closeModal(true)
@@ -71,5 +67,13 @@ export class CampusFormComponent implements OnInit {
   }
   closeModal(reload: boolean): void {
     this.dialogRef.close(reload);
+  }
+  validName(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    const inputValue = event.target.value + String.fromCharCode(charCode);
+    if (!/^[a-zA-Z\s]+$/.test(inputValue)) {
+      return false;
+    }
+    return true;
   }
 }

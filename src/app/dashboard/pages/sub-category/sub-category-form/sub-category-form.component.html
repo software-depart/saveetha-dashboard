@@ -11,7 +11,7 @@
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
-                        placeholder="name">
+                        (keypress)="validName($event)" placeholder="name">
                     <label for="userName">Name</label>
                 </div>
                 <div class="mb-3">

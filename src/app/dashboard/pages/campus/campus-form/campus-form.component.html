@@ -10,8 +10,8 @@
                     {{errorMessage}}
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
-                        placeholder="name">
+                    <input type="text" class="form-control" autocomplete="off" (keypress)="validName($event)"
+                        [(ngModel)]="model.name" placeholder="name">
                     <label for="userName">Name</label>
                 </div>
                 <div class="d-flex justify-content-between mx-3">

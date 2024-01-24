@@ -32,7 +32,7 @@
                 <div style="display: flex; justify-content: space-between;">
                     <div class="form-floating mb-3" style="width: 49%">
                         <input type="text" class="form-control" autocomplete="off" [(ngModel)]="model.name"
-                            placeholder="name">
+                            (keypress)="validName($event)" placeholder="name">
                         <label for="userName">Name</label>
                     </div>
                     <div class="form-floating mb-3" style="width: 49%">
