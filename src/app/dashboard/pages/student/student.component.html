@@ -34,8 +34,11 @@
   <div class="bg-light text-center rounded p-4" style="height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Users</h5>
-      <button *ngIf="userService.isAdmin() || userService.isSuperAdmin()" type="button" class="btn btn-primary btn-sm"
-        (click)="addUser()">Add User</button>
+      <div style="display: flex;align-items: center;">
+        <h6 style="margin-right: 20px;">Users count: {{users.length || 0}}</h6>
+        <button *ngIf="userService.isAdmin() || userService.isSuperAdmin()" type="button" class="btn btn-primary btn-sm"
+          (click)="addUser()">Add User</button>
+      </div>
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

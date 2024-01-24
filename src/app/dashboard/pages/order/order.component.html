@@ -59,6 +59,9 @@
   <div class="bg-light text-center rounded p-4" style="height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Orders</h5>
+      <div style="display: flex;align-items: center;">
+        <h6 style="margin-right: 20px;">Orders count: {{orders.length || 0}}</h6>
+      </div>
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

@@ -56,7 +56,14 @@
   <div class="bg-light text-center rounded p-4" style="height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Items</h5>
-      <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Item</button>
+      <div style="display: flex;align-items: center;">
+        <h6 style="margin-right: 20px;">Items count: {{items.length || 0}}</h6>
+        <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Item</button>
+      </div>
+      <!-- <div>
+        <input type="file" (change)="onFileSelected($event)" accept=".csv" />
+        <button (click)="uploadFile()">Upload</button>
+      </div> -->
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -66,6 +73,7 @@
       <table class="table text-start  align-middle table-bordered table-hover mb-0">
         <thead>
           <tr class="text-dark">
+            <th scope="col">S.No.</th>
             <th scope="col">Name</th>
             <th scope="col">Qty.</th>
             <th scope="col">Unit</th>
@@ -80,6 +88,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of items; index as i">
+            <td>{{i+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.unit}}</td>
@@ -100,8 +109,8 @@
             </td>
             <td>
               <div class='d-flex justify-content-around align-items-center'>
-                <div style="cursor: pointer; font-size: 14px;" (click)="updateItem(item)"><i
-                    class="fa fa-edit"></i></div>
+                <div style="cursor: pointer; font-size: 14px;" (click)="updateItem(item)"><i class="fa fa-edit"></i>
+                </div>
                 <div><i class="fa fa-trash text-danger" (click)="onDelete(item)"
                     style="cursor: pointer; font-size: 14px;"></i></div>
               </div>
