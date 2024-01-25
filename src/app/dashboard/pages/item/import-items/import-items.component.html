@@ -1,0 +1,25 @@
+<div class="modal-dialog" style="margin: 1.75rem 1.75rem; max-width: 100%;">
+    <div class="modal-content">
+        <div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Import Items</h5>
+                <button type="button" class="btn-close" mat-dialog-close style="cursor: pointer;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+                    {{errorMessage}}
+                </div>
+                <a style="text-decoration: underline; color: #007bff; font-size: 14px; cursor: pointer;"
+                    (click)="downloadSampleFile()">Download sample file</a>
+                <div style="margin-top: 20px;">
+                    <input type="file" (change)="onFileSelected($event)" accept=".csv" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" mat-dialog-close>Close</button>
+                <button type="submit" class="btn btn-primary" (click)="uploadFile()" [disabled]="!file">Import</button>
+            </div>
+        </div>
+    </div>
+</div>

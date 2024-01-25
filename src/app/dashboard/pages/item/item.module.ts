@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ItemFormComponent } from './item-form/item-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ImportItemsComponent } from './import-items/import-items.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ItemComponent,
-    ItemFormComponent
+    ItemFormComponent,
+    ImportItemsComponent
   ],
   imports: [
     CommonModule,

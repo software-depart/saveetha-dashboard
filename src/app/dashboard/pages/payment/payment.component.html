@@ -1,6 +1,6 @@
 <div class="d-flex mt-2">
   <div class="container-fluid pt-2 px-4">
-    <div class="bg-light text-center rounded p-4" style="height: 100vh;">
+    <div class="bg-light text-center rounded p-4">
       <div class="d-flex align-items-center justify-content-between mb-4">
         <h5 class="mb-0 text-primary">Payments</h5>
         <div style="display: flex;align-items: center;">
@@ -12,7 +12,7 @@
         Loading...
       </button>
       <div class="table-responsive" *ngIf="!isLoading && payments.length > 0">
-        <table class="table text-start  align-middle table-bordered table-hover mb-0">
+        <table class="table text-start  align-middle table-bordered table-hover" style="margin-bottom: 50px;">
           <thead>
             <tr class="text-dark">
               <th scope="col">S.No.</th>

@@ -58,19 +58,17 @@
       <h5 class="mb-0 text-primary">Items</h5>
       <div style="display: flex;align-items: center;">
         <h6 style="margin-right: 20px;">Items count: {{items.length || 0}}</h6>
-        <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Item</button>
+        <button type="button" style="margin-right: 20px;" class="btn btn-primary btn-sm" (click)="addItem()">Add
+          Item</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="importItems()">Import Items</button>
       </div>
-      <!-- <div>
-        <input type="file" (change)="onFileSelected($event)" accept=".csv" />
-        <button (click)="uploadFile()">Upload</button>
-      </div> -->
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       Loading...
     </button>
     <div class="table-responsive" *ngIf="!isLoading && items.length > 0">
-      <table class="table text-start  align-middle table-bordered table-hover mb-0">
+      <table class="table text-start  align-middle table-bordered table-hover" style="margin-bottom: 50px;">
         <thead>
           <tr class="text-dark">
             <th scope="col">S.No.</th>

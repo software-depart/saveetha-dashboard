@@ -7,6 +7,7 @@ import { ResaturantService } from 'src/app/services/restaurant/resaturant.servic
 import { ItemFormComponent } from './item-form/item-form.component'
 import { UserService } from 'src/app/services/user/user.service'
 import { CampusService } from 'src/app/services/campus/campus.service'
+import { ImportItemsComponent } from './import-items/import-items.component';
 
 @Component({
   selector: 'app-item',
@@ -182,6 +183,17 @@ export class ItemComponent implements OnInit {
   getAllCampuses() {
     this.campusService.getAllCampuses('').subscribe(res => {
       this.campuses = res.data;
+    })
+  }
+  importItems() {
+    const dialogRef = this.dialog.open(ImportItemsComponent, {
+      width: '500',
+      disableClose: true
+    })
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.getAllItems();
+      }
     })
   }
 }
