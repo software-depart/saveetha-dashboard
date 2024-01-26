@@ -55,12 +55,12 @@
     </div>
   </div>
 </div>
-<div class="container-fluid pt-2 px-4">
+<div class="container-fluid pt-2 px-4" style="margin-bottom: 10px;">
   <div class="bg-light text-center rounded p-4" style="height: 100vh;">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Orders</h5>
       <div style="display: flex;align-items: center;">
-        <h6 style="margin-right: 20px;">Orders count: {{orders.length || 0}}</h6>
+        <h6 style="margin-right: 20px; margin-bottom: 0px; color: #007bff; border: 1px solid #939497; border-radius: 5px; padding: 5px;">Orders count: {{orders.length || 0}}</h6>
       </div>
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
