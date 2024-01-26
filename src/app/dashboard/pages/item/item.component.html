@@ -52,14 +52,15 @@
   </div>
 </div>
 
-<div class="container-fluid pt-2 px-4">
+<div class="container-fluid pt-2 px-4" style="margin-bottom: 55px;">
   <div class="bg-light text-center rounded p-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="mb-0 text-primary">Items</h5>
       <div style="display: flex;align-items: center;">
-        <h6 style="margin-right: 20px;">Items count: {{items.length || 0}}</h6>
-        <button type="button" style="margin-right: 20px;" class="btn btn-primary btn-sm" (click)="addItem()">Add
-          Item</button>
+        <h6
+          style="margin-right: 20px; margin-bottom: 0px; color: #007bff; border: 1px solid #939497; border-radius: 5px; padding: 5px;">
+          Items count: {{items.length || 0}}</h6>
+        <button type="button" class="btn btn-primary btn-sm" (click)="addItem()">Add Item</button>
         <button type="button" class="btn btn-primary btn-sm" (click)="importItems()">Import Items</button>
       </div>
     </div>

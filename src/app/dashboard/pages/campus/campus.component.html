@@ -4,7 +4,7 @@
       <div class="d-flex align-items-center justify-content-between mb-4">
         <h5 class="mb-0 text-primary">Campuses</h5>
         <div style="display: flex;align-items: center;">
-          <h6 style="margin-right: 20px;">Campuses count: {{campuses.length || 0}}</h6>
+          <h6 style="margin-right: 20px; margin-bottom: 0px; color: #007bff; border: 1px solid #939497; border-radius: 5px; padding: 5px;">Campuses count: {{campuses.length || 0}}</h6>
           <button type="button" class="btn btn-primary btn-sm" (click)="addCampus()">Add Campus</button>
         </div>
       </div>
@@ -16,6 +16,7 @@
         <table class="table text-start  align-middle table-bordered table-hover" style="margin-bottom: 50px;">
           <thead>
             <tr class="text-dark">
+              <th scope="col">S.No.</th>
               <th scope="col">Name</th>
               <th scope="col">Created by</th>
               <th scope="col">Updated by</th>
@@ -25,6 +26,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of campuses; index as i">
+              <td>{{i+1}}</td>
               <td>{{item.name}}</td>
               <td>{{item.createdBy?.firstName}}</td>
               <td>{{item.updatedBy?.firstName}}</td>
