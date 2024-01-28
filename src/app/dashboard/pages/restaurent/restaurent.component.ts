@@ -6,6 +6,7 @@ import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { FoodcourtService } from 'src/app/services/foodcourt/foodcourt.service'
 import { UserService } from 'src/app/services/user/user.service'
 import { CampusService } from 'src/app/services/campus/campus.service'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-restaurent',
@@ -27,7 +28,8 @@ export class RestaurentComponent implements OnInit {
     private dialog: MatDialog,
     private foodcourtService: FoodcourtService,
     private userService: UserService,
-    private campusService: CampusService) {
+    private campusService: CampusService,
+    private http: HttpClient) {
     this.isLoading = true
   }
 
@@ -172,6 +174,25 @@ export class RestaurentComponent implements OnInit {
     this.campusService.getAllCampuses('').subscribe(res => {
       this.campuses = res.data;
     })
+  }
+  exportRestaurants() {
+    this.http.get('/restaurant/download/csv', { responseType: 'text' })
+      .subscribe((csvData: string) => {
+        this.downloadFile(csvData, `restaurants.csv`);
+      });
+  }
+  downloadFile(data: string, filename: string) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 }
 

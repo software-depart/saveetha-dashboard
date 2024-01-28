@@ -5,6 +5,7 @@ import { SubCategoryFormComponent } from './sub-category-form/sub-category-form.
 import { AlertComponent } from 'src/app/components/alert/alert.component';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { UserService } from 'src/app/services/user/user.service'
+import { HttpClient } from '@angular/common/http'
 
 @Component({
   selector: 'app-sub-category',
@@ -22,7 +23,8 @@ export class SubCategoryComponent implements OnInit {
     private subcategoryService: SubcategoryService,
     private dialog: MatDialog,
     private categoryService: CategoryService,
-    private userService: UserService) {
+    private userService: UserService,
+    private http: HttpClient) {
     this.isLoading = true
   }
 
@@ -151,6 +153,24 @@ export class SubCategoryComponent implements OnInit {
       this.categories = res.data;
     })
   }
+  exportSubcategories() {
+    this.http.get('/subcategory/download/csv', { responseType: 'text' })
+      .subscribe((csvData: string) => {
+        this.downloadFile(csvData, `subcategories.csv`);
+      });
+  }
+  downloadFile(data: string, filename: string) {
+    const blob = new Blob([data], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
 
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
 }
 

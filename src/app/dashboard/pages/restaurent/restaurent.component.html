@@ -55,7 +55,9 @@
           || 0}}</h6>
         <h6 style="margin-right: 20px" class="badge badge-pill badge-info">
           Foodcourt count: {{foodcourts.length || 0}}</h6>
-        <button type="button" class="btn btn-primary btn-sm" (click)="addRestaurant()">Add Restaurant</button>
+        <button style="margin-right: 20px" type="button" class="btn btn-primary btn-sm" (click)="addRestaurant()">Add
+          Restaurant</button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="exportRestaurants()">Export Restaurants</button>
       </div>
     </div>
     <button *ngIf="isLoading" class="btn btn-primary" type="button" disabled>
